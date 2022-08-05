@@ -10,5 +10,7 @@ The project is a tile matching game where the player must flip one tile and then
 
 The game ends when the player matches every pair.
 
-Green tiles cannot be flipped again. They get disabled. 
-After flipping one tile, the player must flip another one (a *different* one) to continue. 
+Other rules:
+
+- Green tiles cannot be flipped again. They get disabled. 
+- After flipping one tile, the player must flip another one (a *different* one) to continue. 
