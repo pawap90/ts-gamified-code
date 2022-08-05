@@ -1,11 +1,11 @@
 
 // This will keep track of each tile's state.
-let tiles: { emoji: string, state: string }[] = []; 
+let tiles: { emoji: string, state: string }[] = [];
 
 // Init game
 let processedEmojis = duplicate(['🎃', '🐶', '🐱', '⚔️', '🕹️', '⭐', '👾', '🍄', '🦴', '⛏️']);
 processedEmojis = shuffle(processedEmojis);
-tiles = createTiles(processedEmojis);
+tiles = createTiles(processedEmojis); // Set the initial state.
 prepareBoard();
 
 /** Duplicate the initial emoji array (each tile has a pair) */
@@ -65,10 +65,11 @@ function prepareBoard(): void {
 /** Refreshes the board to display the current state */
 function refreshBoard(): void {
     const buttons = document.getElementsByClassName('tile-btn');
+
     for (let i = 0; i < buttons.length; i++) {
-        const tileBtn = buttons[i]  as HTMLButtonElement;
+        const tileBtn = buttons[i] as HTMLButtonElement;
         const tileState = getTile(tileBtn);
-        
+
         if (!tileState) break;
 
         switch (tileState.state) {
