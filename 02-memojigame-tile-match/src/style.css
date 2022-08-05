@@ -1,0 +1,16 @@
+#game-container {
+    width: 400px;
+    margin: 32px;
+}
+
+#board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.tile-btn {
+    width: 64px;
+    height: 64px;
+}
