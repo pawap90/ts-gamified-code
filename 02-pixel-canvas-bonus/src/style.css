@@ -2,53 +2,61 @@ body {
     background-color: #1b1924;
 }
 
-.row>button {
-    background-color: #efefe1;
-    width: 48px;
-    height: 48px;
-    margin: 4px;
-    border: none;
-}
-
-#canvas {
-    background-color: #1b1924;
-    border-radius: 30px;
-    padding: 32px;
-    border-style: solid;
-    border-width: 4px;
-    border-color: #5f597a;
-    margin-bottom: 20px;
-}
-
 #container {
     background-color: #d9d9bf;
     border-radius: 64px;
-    padding: 64px;
-    margin: 32px;
+    border: 4px solid #b3b376;
+
+    padding: 48px 48px 32px 48px;
     width: 520px;
-    border-style: solid;
-    border-width: 4px;
-    border-color: #b3b376;
-    padding-bottom: 20px;
-    text-align: center;
+    display: block;
+    margin: auto;
+}
+
+#screen {
+    background-color: #1b1924;
+    border-radius: 30px;
+    border: 4px solid #5f597a;
+    padding: 38px;
+}
+
+#grid {
+    width: 440px;
+    height: 440px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#grid>button {
+    background-color: #efefe1;
+    width: 48px;
+    height: 48px;
+    border: none;
 }
 
 .buttons {
     display: flex;
     gap: 16px;
+    text-align: right;
+    padding: 32px 32px 0px 32px;
+    justify-content: flex-end;
 }
 
 .buttons>button {
     border: none;
     border-radius: 8px;
-    width: 100px;
-    height: 48px;
+    height: 32px;
     font-size: medium;
+    cursor: pointer;
 }
 
 .buttons>#refresh {
-    background-color: #1b1924;
-    color: #d9d9bf;
+    background-color: #b2b2b2;
+    color: #212121;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    width: 100px;
 }
 
 .buttons>#color {

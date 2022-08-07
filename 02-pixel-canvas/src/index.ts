@@ -1,29 +1,22 @@
+const pixels: { x: number, y: number, active: boolean }[] = [];
+
 function updateState(x: number, y: number) {
     const pixelToUpdate = pixels.find(p => p.x == x && p.y == y);
     if (pixelToUpdate)
         pixelToUpdate.active = !pixelToUpdate.active;
 }
 
-function createCanvas(): void {
-    const canvasSize = 8;
-    const canvas = document.getElementById('canvas');
+function createGrid(): void {
+    const gridSize = 8;
+    const grid = document.getElementById('grid');
 
-    for (let x = 0; x < canvasSize; x++) {
-        const row = createRow();
-        for (let y = 0; y < canvasSize; y++) {
+    for (let x = 0; x < gridSize; x++) {
+        for (let y = 0; y < gridSize; y++) {
             pixels.push({ x: x, y: y, active: false });
             const pixelBtn = createPixel({ x: x, y: y, active: false });
-            row.append(pixelBtn);
+            grid?.append(pixelBtn);
         }
-        canvas?.append(row);
     }
-}
-
-function createRow(): HTMLDivElement {
-    const row = document.createElement('div');
-    row.setAttribute('class', 'row');
-
-    return row;
 }
 
 function createPixel(pixel: { x: number, y: number, active: boolean }): HTMLButtonElement {
@@ -32,13 +25,13 @@ function createPixel(pixel: { x: number, y: number, active: boolean }): HTMLButt
 
     pixelBtn.onclick = function () {
         updateState(pixel.x, pixel.y);
-        refreshCanvas();
+        refreshGrid();
     };
 
     return pixelBtn;
 }
 
-function refreshCanvas(): void {
+function refreshGrid(): void {
     for (const key in pixels) {
         const pixel = pixels[key];
         const pixelBtn = document.getElementById(`${pixel.x}-${pixel.y}`);
@@ -48,5 +41,4 @@ function refreshCanvas(): void {
 }
 
 // Start app.
-let pixels: { x: number, y: number, active: boolean }[] = [];
-createCanvas();
+createGrid();
