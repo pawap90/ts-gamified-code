@@ -4,11 +4,10 @@
   "description": "An 8x8 retro-looking pixel art canvas made with HTML and TypeScript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Paula Santamaría",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "typescript": "^4.7.4"
   }
