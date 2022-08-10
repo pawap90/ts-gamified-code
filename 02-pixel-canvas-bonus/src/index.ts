@@ -43,8 +43,7 @@ function createPixelBtn(pixel: { x: number, y: number, active: boolean }): HTMLB
 }
 
 function refreshCanvas(): void {
-    for (const key in pixels) {
-        const pixel = pixels[key];
+    for (const pixel of pixels) {
         const pixelBtn = document.getElementById(`${pixel.x}-${pixel.y}`);
         if (pixelBtn)
             pixelBtn.style.backgroundColor = pixel.colorHex;
