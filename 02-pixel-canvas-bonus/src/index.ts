@@ -25,8 +25,9 @@ function createCanvas(): void {
         }
     }
 
-    setColorButton();
-    refreshCanvas();
+    refreshCanvas(); // Initialize with first color in the palette.
+    setNextColor(); // So the user starts with a different color.
+    initializeColorBtn();
 }
 
 function createPixelBtn(pixel: { x: number, y: number, active: boolean }): HTMLButtonElement {
@@ -50,7 +51,7 @@ function refreshCanvas(): void {
     }
 }
 
-function setColorButton(): void {
+function initializeColorBtn(): void {
     const colorBtn = document.getElementById('color');
 
     if (colorBtn) {
