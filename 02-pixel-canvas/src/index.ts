@@ -6,15 +6,16 @@ function updateState(x: number, y: number) {
         pixelToUpdate.active = !pixelToUpdate.active;
 }
 
-function createGrid(): void {
-    const gridSize = 8;
-    const grid = document.getElementById('grid');
+function createCanvas(): void {
+    const canvasSize = 8;
+    const canvas = document.getElementById('canvas');
 
-    for (let x = 0; x < gridSize; x++) {
-        for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < canvasSize; x++) {
+        for (let y = 0; y < canvasSize; y++) {
             pixels.push({ x: x, y: y, active: false });
+            
             const pixelBtn = createPixel({ x: x, y: y, active: false });
-            grid?.append(pixelBtn);
+            canvas?.append(pixelBtn);
         }
     }
 }
@@ -25,15 +26,14 @@ function createPixel(pixel: { x: number, y: number, active: boolean }): HTMLButt
 
     pixelBtn.onclick = function () {
         updateState(pixel.x, pixel.y);
-        refreshGrid();
+        refreshCanvas();
     };
 
     return pixelBtn;
 }
 
-function refreshGrid(): void {
-    for (const key in pixels) {
-        const pixel = pixels[key];
+function refreshCanvas(): void {
+    for (const pixel of pixels) {
         const pixelBtn = document.getElementById(`${pixel.x}-${pixel.y}`);
         if (pixelBtn)
             pixelBtn.style.backgroundColor = pixel.active ? '#28bb84' : '#efefe1';
@@ -41,4 +41,4 @@ function refreshGrid(): void {
 }
 
 // Start app.
-createGrid();
+createCanvas();

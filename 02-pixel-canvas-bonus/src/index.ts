@@ -1,6 +1,6 @@
 const pixels: { x: number, y: number, colorHex: string }[] = [];
 const palette = ['#fcffc0', '#74a33f', '#2a584f', '#6eb8a8', '#c6505a', '#2f142f', '#774448', '#ee9c5d'];
-const currentColor: { index: number, hex: string } = { index: 0, hex: palette[0] };
+const currentColor = { index: 0, hex: palette[0] };
 
 function updateState(x: number, y: number): void {
     const pixelToUpdate = pixels.find(p => p.x == x && p.y == y);
@@ -13,20 +13,20 @@ function setNextColor(): void {
     currentColor.hex = palette[currentColor.index];
 }
 
-function createGrid(): void {
-    const gridSize = 8;
-    const grid = document.getElementById('grid');
+function createCanvas(): void {
+    const canvasSize = 8;
+    const canvas = document.getElementById('canvas');
 
-    for (let x = 0; x < gridSize; x++) {
-        for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < canvasSize; x++) {
+        for (let y = 0; y < canvasSize; y++) {
             pixels.push({ x: x, y: y, colorHex: currentColor.hex });
             const pixelBtn = createPixelBtn({ x: x, y: y, active: false });
-            grid?.append(pixelBtn);
+            canvas?.append(pixelBtn);
         }
     }
 
     setColorButton();
-    refreshGrid();
+    refreshCanvas();
 }
 
 function createPixelBtn(pixel: { x: number, y: number, active: boolean }): HTMLButtonElement {
@@ -35,13 +35,13 @@ function createPixelBtn(pixel: { x: number, y: number, active: boolean }): HTMLB
 
     pixelBtn.onclick = function () {
         updateState(pixel.x, pixel.y);
-        refreshGrid();
+        refreshCanvas();
     };
 
     return pixelBtn;
 }
 
-function refreshGrid(): void {
+function refreshCanvas(): void {
     for (const key in pixels) {
         const pixel = pixels[key];
         const pixelBtn = document.getElementById(`${pixel.x}-${pixel.y}`);
@@ -64,4 +64,4 @@ function setColorButton(): void {
 }
 
 // Start app.
-createGrid();
+createCanvas();
