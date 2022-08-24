@@ -1,6 +1,6 @@
 const pixels: { x: number, y: number, active: boolean }[] = [];
 
-function updateState(x: number, y: number) {
+function updateState(x: number, y: number): void {
     const pixelToUpdate = pixels.find(p => p.x == x && p.y == y);
     if (pixelToUpdate)
         pixelToUpdate.active = !pixelToUpdate.active;
