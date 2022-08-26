@@ -64,13 +64,13 @@ function printTiles(): void {
 
 function runGame() {
     printTiles();
-    readlineSync.question('Try to memorize the grid. Then, press Enter to continue.', { hideEchoBack: true, mask: '' });
+    readlineSync.question('Try to memorize the grid. Then, press Enter to continue.');
 
     tiles.forEach(t => t.state = 'idle');
     printTiles();
 
     while (tiles.findIndex(t => t.state == 'idle') > -1) {
-        let inputNumber = readlineSync.questionInt("Enter a tile's number to flip it: ", { min: 0, max: tiles.length });
+        let inputNumber = readlineSync.questionInt("Enter a tile's number to flip it: ", { min: 0, max: tiles.length -1 });
         flip(inputNumber);
         printTiles();
     }
