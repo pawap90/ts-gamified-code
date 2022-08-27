@@ -1,8 +1,8 @@
 {
-  "name": "memojigame-tile-match",
+  "name": "memojigame-tile-match-bonus",
   "version": "1.0.0",
   "description": "A memory game where you have to find pairs of emojis",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
