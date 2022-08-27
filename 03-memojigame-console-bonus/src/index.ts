@@ -87,5 +87,6 @@ class Game {
     }
 }
 
-const game = new Game(['🎃', '🐶', '🐱', '🎮', '⭐', '👾', '🍄', '🦴']); // Set the initial state.
+// Now our state is handled by this instance.
+const game = new Game(['🎃', '🐶', '🐱', '🎮', '⭐', '👾', '🍄', '🦴']); 
 game.run();
