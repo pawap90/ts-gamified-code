@@ -7,7 +7,7 @@ type Tile = {
 }
 
 class Game {
-    tiles: Tile[];
+    readonly tiles: Tile[];
 
     constructor(emojis: string[]) {
         this.tiles = this.createTiles(emojis);
