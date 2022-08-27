@@ -29,8 +29,8 @@ function createTiles(emojis: string[]): Tile[] {
 }
 
 function flip(tileIndex: number): void {
-    // If the tile is already flipped, don't do anything.
-    if (tiles.find(ft => ft.index == tileIndex && (ft.state == 'cleared' || ft.state == 'flipped')))
+    // If the tile is already flipped or cleared, don't do anything.
+    if (tiles.find(ft => ft.index == tileIndex && ft.state != 'idle'))
         return;
 
     const flippedTiles = tiles.filter(t => t.state == 'flipped');
@@ -55,7 +55,12 @@ function printTiles(): void {
 
     for (var i = 0; i < tiles.length; i = i + gridSize) {
         const row = tiles.slice(i, i + gridSize)
-            .map(tile => tile.state == 'idle' ? tile.index.toString().padStart(2, ' ') : tile.emoji)
+            .map(tile => {
+                if (tile.state == 'idle') 
+                    return tile.index.toString().padStart(2, ' ');
+                else 
+                    return tile.emoji;
+            })
             .join('  |  ');
 
         console.log(row);
