@@ -56,9 +56,9 @@ function printTiles(): void {
     for (var i = 0; i < tiles.length; i = i + gridSize) {
         const row = tiles.slice(i, i + gridSize)
             .map(tile => {
-                if (tile.state == 'idle') 
+                if (tile.state == 'idle')
                     return tile.index.toString().padStart(2, ' ');
-                else 
+                else
                     return tile.emoji;
             })
             .join('  |  ');
@@ -75,9 +75,12 @@ function runGame() {
     printTiles();
 
     while (tiles.findIndex(t => t.state == 'idle') > -1) {
-        let inputNumber = readlineSync.questionInt("Enter a tile's number to flip it: ", { min: 0, max: tiles.length -1 });
-        flip(inputNumber);
-        printTiles();
+        let inputNumber = readlineSync.questionInt("Enter a tile's number: ");
+        if (inputNumber >= 0 && inputNumber < 16) {
+            flip(inputNumber);
+            printTiles();
+        }
+        else console.log('Invalid input')
     }
     console.log('Game completed. Congrats!')
 }
