@@ -27,7 +27,7 @@ function createTiles(emojis: string[]): Tile[] {
             emoji: e,
             state: 'up',
             index
-        }
+        };
     });
 }
 
@@ -83,9 +83,9 @@ function runGame() {
             flip(inputNumber);
             printTiles();
         }
-        else console.log('Invalid input')
+        else console.log('Invalid input');
     }
-    console.log('Game completed. Congrats!')
+    console.log('Game completed. Congrats!');
 }
 
 tiles = createTiles(['🎃', '🐶', '🐱', '🎮', '⭐', '👾', '🍄', '🦴']); // Set the initial state.
