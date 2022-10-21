@@ -1,5 +1,5 @@
 {
-  "name": "memojigame-tile-match",
+  "name": "memojigame-tile-match-bonus",
   "version": "1.0.0",
   "description": "A memory game where you have to find pairs of emojis",
   "main": "src/index.js",
