@@ -21,6 +21,7 @@ export function initialize() {
 
         const amount = document.createElement('span');
         amount.id = `${fish.name}-amount`;
+        amount.innerHTML = `${fish.icon} ${fish.amount}`;
         const price = document.createElement('span');
         price.innerHTML = ` x $${fish.value}`;
 
@@ -35,30 +36,26 @@ export function initialize() {
 
     fishesSection.appendChild(sellAllBtn);
 
-    update();
 }
 
 export function getRandomFish(): Fish | null {
 
     // Distribute fish according to their probability.
-    const distribution = fishes.map((f, index) => {
-        const distributedIndex = [...Array<number>(f.probability).fill(index)];
+    const distribution = fishes.map((f) => {
+        const distributedIndex = [...Array<Fish | null>(f.probability).fill(f)];
         return distributedIndex;
     });
 
     const flatDistribution = distribution.flat();
 
-    // Add -1 for missed attempts.
+    // Add null for missed attempts.
     const missedAttemptsProbability =distribution.length;
-    flatDistribution.push(...Array<number>(missedAttemptsProbability).fill(-1));
+    flatDistribution.push(...Array<Fish | null>(missedAttemptsProbability).fill(null));
 
     // Get random fish from distribution.
-    const fishIndex = flatDistribution[Math.floor(Math.random() * flatDistribution.length)];
+    const fish = flatDistribution[Math.floor(Math.random() * flatDistribution.length)];
 
-    if (fishIndex == -1)
-        return null;
-
-    return fishes[fishIndex];
+    return fish;
 }
 
 export function add(fish: Fish) {
