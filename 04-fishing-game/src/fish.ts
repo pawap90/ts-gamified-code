@@ -3,8 +3,7 @@ export type Fish = {
     icon: string,
     amount: number,
     value: number,
-    probability: number,
-    element?: HTMLElement
+    probability: number
 }
 
 const fishes: Fish[] = [
