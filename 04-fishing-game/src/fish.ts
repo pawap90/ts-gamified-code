@@ -22,15 +22,13 @@ export function initialize() {
         const amount = document.createElement('span');
         amount.id = `${fish.name}-amount`;
         const price = document.createElement('span');
-        price.id = `${fish.name}-price`;
         price.innerHTML = ` x $${fish.value}`;
 
         container.appendChild(amount);
         container.appendChild(price);
-
         fishesSection.appendChild(container);
-
     }
+
     const sellAllBtn = document.createElement('button');
     sellAllBtn.innerHTML = 'Sell all';
     sellAllBtn.onclick = sellAll;
