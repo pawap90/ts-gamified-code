@@ -43,21 +43,24 @@ export function initialize() {
 export function getRandomFish(): Fish | null {
 
     // Distribute fish according to their probability.
-    const distribution = fishes.map((f) => {
-        const distributedIndex = [...Array<Fish | null>(f.probability).fill(f)];
+    const distribution = fishes.map((f, index) => {
+        const distributedIndex = [...Array<number | null>(f.probability).fill(index)];
         return distributedIndex;
     });
 
     const flatDistribution = distribution.flat();
 
     // Add null for missed attempts.
-    const missedAttemptsProbability =distribution.length;
-    flatDistribution.push(...Array<Fish | null>(missedAttemptsProbability).fill(null));
+    const missedAttemptsProbability = distribution.length;
+    flatDistribution.push(...Array<number | null>(missedAttemptsProbability).fill(null));
 
     // Get random fish from distribution.
-    const fish = flatDistribution[Math.floor(Math.random() * flatDistribution.length)];
+    const fishIndex = flatDistribution[Math.floor(Math.random() * flatDistribution.length)];
 
-    return fish;
+    if (fishIndex != null)
+        return fishes[fishIndex];
+
+    return null;
 }
 
 export function add(fish: Fish) {
