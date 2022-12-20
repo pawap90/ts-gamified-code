@@ -73,7 +73,6 @@ export class BaitManager {
 
         this.selectedBait = bait;
         button.className = 'select active';
-        this.update();
     }
 
     enableButtons(mode: 'buy' | 'select') {
