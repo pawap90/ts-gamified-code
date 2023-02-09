@@ -2,9 +2,8 @@
   "name": "05-dungeon-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "tsc-watch --onSuccess \"node ./dist/index.js\""
+    "dev": "tsc --watch && node ./dist/server.js"
   },
   "keywords": [],
   "author": "",
