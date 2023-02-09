@@ -26,16 +26,15 @@ app.post('/api/go/:direction', (req: Request<{ direction: 'N' | 'S' | 'E' | 'W' 
         return;
     }
 
-    const roomId = dungeon.rooms[player.currentRoomId].getRoomId(req.params.direction);
+    const roomId = dungeon.getRoom(player.currentRoomId)?.getRoomId(req.params.direction);
     if (roomId) {
-        let message = dungeon.rooms[roomId].enter(player);
+        let message = dungeon.getRoom(roomId)?.enter(player);
 
         if (player.treasureFound) {
             message = 'You won!';
             resetGame();
         }
-
-        if (!player?.alive) {
+        else if (!player?.alive) {
             message = 'Game over!';
             resetGame();
         }
