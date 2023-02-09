@@ -27,7 +27,7 @@ app.post('/api/go/:direction', (req: Request<{ direction: 'N' | 'S' | 'E' | 'W' 
     }
 
     const roomId = dungeon.getRoom(player.currentRoomId)?.getRoomId(req.params.direction);
-    if (roomId) {
+    if (roomId != undefined) {
         let message = dungeon.getRoom(roomId)?.enter(player);
 
         if (player.treasureFound) {
