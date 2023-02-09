@@ -33,6 +33,10 @@ export class Dungeon {
         }
     }
 
+    getRoom(id: number): Room | undefined {
+        return this.rooms.find(r => r.id == id);
+    }
+
     private getRandomDirection(room: Room): Direction {
         if (room.doors.length == 4)
             throw Error(`No availabe directions left for room ${room.id}`);
@@ -49,7 +53,7 @@ export class Dungeon {
 
     private createRandomRooms() {
         // First room is always empty.
-        this.rooms.push(new EmptyRoom(0, Utils.getRandomNumber(1, 4))); 
+        this.rooms.push(new EmptyRoom(0, Utils.getRandomNumber(1, 4)));
 
         const distributedRoomTypes = [...Array(7).fill('empty'), ...Array(3).fill('spikes')];
         for (var i = 1; i < this.numberOfRooms; i++) {
