@@ -1,6 +1,9 @@
 import { Player } from "./player";
 import { Utils } from "./utils";
 
+const directions = ['N', 'E', 'S', 'W'] as const;
+type Direction = (typeof directions)[number];
+
 export class Room {
     id: number;
     maxDoors: number;
@@ -36,6 +39,35 @@ export class Room {
         message += '.';
 
         return message;
+    }
+
+    connect(room: Room) {
+        const dir = this.getRandomDirection();
+        this.doors.push({ roomId: room.id, direction: dir });
+        room.doors.push({ roomId: this.id, direction: this.getOppositeDirection(dir) });
+    }
+
+    private getRandomDirection(): Direction {
+        if (this.doors.length == 4)
+            throw Error(`No availabe directions left for room ${this.id}`);
+
+        let usedDirections = this.doors.map(d => d.direction);
+        let availableDirections = directions.filter(d => usedDirections.indexOf(d) < 0);
+
+        if (availableDirections.length == 1)
+            return availableDirections[0];
+
+        const randomDirection = Utils.getRandomItem(availableDirections);
+        return randomDirection;
+    }
+
+    private getOppositeDirection(direction: Direction): Direction {
+        switch (direction) {
+            case 'N': return 'S';
+            case 'S': return 'N';
+            case 'E': return 'W';
+            case 'W': return 'E';
+        }
     }
 }
 

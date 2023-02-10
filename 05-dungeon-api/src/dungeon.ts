@@ -1,9 +1,6 @@
 import { EmptyRoom, Room, SpikesRoom, TreasureRoom } from "./room";
 import { Utils } from "./utils";
 
-const directions = ['N', 'E', 'S', 'W'] as const;
-type Direction = (typeof directions)[number];
-
 export class Dungeon {
     private numberOfRooms: number;
     rooms: Room[] = [];
@@ -14,41 +11,32 @@ export class Dungeon {
 
     createRooms() {
         this.createRandomRooms();
+        this.rooms = this.connectRooms(this.rooms);
+    }
 
-        for (const room of this.rooms) {
-            const availableRooms = this.rooms.filter(r => r.id != room.id && r.doors.length < 4);
-            let nextRoomIndex = 0;
-
-            while (room.doors.length < room.maxDoors && nextRoomIndex < availableRooms.length) {
-
-                const otherRoom = availableRooms[nextRoomIndex]!;
-                if (otherRoom.id != room.id && !room.doors.find(r => r.roomId == otherRoom.id)) {
-                    if (otherRoom.doors.length < otherRoom.maxDoors) {
-                        room.doors.push({ roomId: otherRoom.id, direction: this.getRandomDirection(room) });
-                        otherRoom.doors.push({ roomId: room.id, direction: this.getRandomDirection(otherRoom) });
-                    }
-                }
-                nextRoomIndex++;
-            }
-        }
+    private connectRooms(_rooms: Room[]): Room[] {
+        if (_rooms.length < 2)
+            return _rooms;
+    
+        const root = _rooms[0];
+        const splitAt = _rooms.length / 2;
+        const sideA = _rooms.slice(1, splitAt);
+        const sideB = _rooms.slice(splitAt);
+    
+        if (sideA.length > 0) 
+            root.connect(sideA[0]);
+    
+        if (sideB.length > 0) 
+            root.connect(sideB[0]);
+    
+        const connectedA = this.connectRooms(sideA);
+        const connectedB = this.connectRooms(sideB);
+    
+        return [root].concat(connectedA).concat(connectedB);
     }
 
     getRoom(id: number): Room | undefined {
         return this.rooms.find(r => r.id == id);
-    }
-
-    private getRandomDirection(room: Room): Direction {
-        if (room.doors.length == 4)
-            throw Error(`No availabe directions left for room ${room.id}`);
-
-        let usedDirections = room.doors.map(d => d.direction);
-        let availableDirections = directions.filter(d => usedDirections.indexOf(d) < 0);
-
-        if (availableDirections.length == 1)
-            return availableDirections[0];
-
-        const randomDirection = Utils.getRandomItem(availableDirections);
-        return randomDirection;
     }
 
     private createRandomRooms() {
