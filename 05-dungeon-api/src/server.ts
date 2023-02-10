@@ -17,10 +17,6 @@ app.post('/api/start', (req: Request<{}, {}, {}, { rooms?: number }>, res: Respo
     dungeon = new Dungeon(req.query.rooms ?? 6);
     dungeon.createRooms();
 
-    for (const room of dungeon.rooms) {
-        console.log(room);
-    }
-
     res.send(dungeon.rooms[0].enter(player));
 });
 
