@@ -17,6 +17,10 @@ app.post('/api/start', (req: Request<{}, {}, {}, { rooms?: number }>, res: Respo
     dungeon = new Dungeon(req.query.rooms ?? 6);
     dungeon.createRooms();
 
+    for (const room of dungeon.rooms) {
+        console.log(room);
+    }
+
     res.send(dungeon.rooms[0].enter(player));
 });
 
@@ -31,11 +35,11 @@ app.post('/api/go/:direction', (req: Request<{ direction: 'N' | 'S' | 'E' | 'W' 
         let message = dungeon.getRoom(roomId)?.enter(player);
 
         if (player.treasureFound) {
-            message = 'You won!';
+            message += ' You won!';
             resetGame();
         }
         else if (!player?.alive) {
-            message = 'Game over!';
+            message += ' Game over!';
             resetGame();
         }
 
