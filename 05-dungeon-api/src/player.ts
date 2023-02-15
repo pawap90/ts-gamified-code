@@ -3,7 +3,7 @@ export class Player {
     hp = 100;
     treasureFound = false;
 
-    get alive() {
+    get alive(): boolean {
         return this.hp > 0;
     }
 }

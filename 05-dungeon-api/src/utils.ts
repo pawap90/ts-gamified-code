@@ -11,4 +11,4 @@ function getRandomItem<T>(array: T[]): T {
 export const Utils = {
     getRandomItem,
     getRandomNumber
-}
+};

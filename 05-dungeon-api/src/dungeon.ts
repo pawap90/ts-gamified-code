@@ -1,67 +1,62 @@
-import { EmptyRoom, Room, SpikesRoom, TreasureRoom } from "./room";
-import { Utils } from "./utils";
+import { EmptyRoom, Room, SpikesRoom, TreasureRoom } from './room';
+import { Utils } from './utils';
 
 export class Dungeon {
     private numberOfRooms: number;
     rooms: Room[] = [];
 
-    constructor(numberOfRooms: number) {
-        this.numberOfRooms = numberOfRooms;
-    }
-
-    createRooms() {
-        this.createRandomRooms();
-        this.rooms = this.connectRooms(this.rooms);
-    }
-
-    private connectRooms(_rooms: Room[]): Room[] {
-        if (_rooms.length < 2)
-            return _rooms;
-    
-        const root = _rooms[0];
-        const splitAt = _rooms.length / 2;
-        const sideA = _rooms.slice(1, splitAt);
-        const sideB = _rooms.slice(splitAt);
-    
-        if (sideA.length > 0) 
-            root.connect(sideA[0]);
-    
-        if (sideB.length > 0) 
-            root.connect(sideB[0]);
-    
-        const connectedA = this.connectRooms(sideA);
-        const connectedB = this.connectRooms(sideB);
-    
-        return [root].concat(connectedA).concat(connectedB);
+    constructor() {
+        this.numberOfRooms = Utils.getRandomNumber(7, 13);
     }
 
     getRoom(id: number): Room | undefined {
         return this.rooms.find(r => r.id == id);
     }
 
-    private createRandomRooms() {
+    createRooms(): void {
+        this.createRandomRooms();
+        this.rooms = this.connectRooms(this.rooms);
+    }
+
+    private connectRooms(rooms: Room[]): Room[] {
+        if (rooms.length < 2)
+            return rooms;
+
+        const root = rooms[0];
+        const splitAt = rooms.length / 2 + 1;
+        const leftSide = rooms.slice(1, splitAt);
+        const rightSide = rooms.slice(splitAt);
+
+        if (leftSide.length > 0)
+            root.connect(leftSide[0]);
+
+        if (rightSide.length > 0)
+            root.connect(rightSide[0]);
+
+        return [root]
+            .concat(this.connectRooms(leftSide))
+            .concat(this.connectRooms(rightSide));
+    }
+
+    private createRandomRooms(): void {
         // First room is always empty.
-        this.rooms.push(new EmptyRoom(0, Utils.getRandomNumber(1, 4)));
+        this.rooms.push(new EmptyRoom(0));
 
         const distributedRoomTypes = [...Array(7).fill('empty'), ...Array(3).fill('spikes')];
-        for (var i = 1; i < this.numberOfRooms; i++) {
-            const numDoors = Utils.getRandomNumber(1, 4);
-            const randomRoomType = Utils.getRandomItem(distributedRoomTypes)
+        for (let i = 1; i < this.numberOfRooms; i++) {
+            const randomRoomType = Utils.getRandomItem(distributedRoomTypes);
 
             switch (randomRoomType) {
                 case 'empty':
-                    this.rooms.push(new EmptyRoom(i, numDoors));
+                    this.rooms.push(new EmptyRoom(i));
                     break;
                 case 'spikes':
-                    this.rooms.push(new SpikesRoom(i, numDoors));
+                    this.rooms.push(new SpikesRoom(i));
                     break;
             }
         }
         // Pick a random room for the treasure.
         const treasureRoomId = Utils.getRandomNumber(1, this.rooms.length - 1);
-        this.rooms[treasureRoomId] = new TreasureRoom(treasureRoomId, Utils.getRandomNumber(1, 4));
+        this.rooms[treasureRoomId] = new TreasureRoom(treasureRoomId);
     }
 }
-
-
-

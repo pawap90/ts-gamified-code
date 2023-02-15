@@ -13,9 +13,9 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to TSG Dungeon REST API! Use api/start to begin');
 });
 
-app.post('/api/start', (req: Request<{}, {}, {}, { rooms?: number }>, res: Response) => {
+app.post('/api/start', (req: Request<unknown, unknown, unknown, { rooms?: number }>, res: Response) => {
     player = new Player();
-    dungeon = new Dungeon(req.query.rooms ?? 6);
+    dungeon = new Dungeon();
     dungeon.createRooms();
 
     res.send(dungeon.rooms[0].enter(player));
@@ -23,7 +23,7 @@ app.post('/api/start', (req: Request<{}, {}, {}, { rooms?: number }>, res: Respo
 
 app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Response) => {
     if (!dungeon || !player) {
-        res.send(`The game is not ready. Use "POST api/start" to generate one.`);
+        res.send('The game is not ready. Use "POST api/start".');
         return;
     }
 
@@ -44,14 +44,14 @@ app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Res
         return;
     }
 
-    res.send(`There's no door in that direction!`);
-})
-
-app.listen(port, () => {
-    console.log(`⚡️[server]: Server running at http://localhost:${port}`);
+    res.send('No door in that direction!');
 });
 
-function resetGame() {
+app.listen(port, () => {
+    console.info(`⚡️[server]: Server running at http://localhost:${port}`);
+});
+
+function resetGame(): void {
     dungeon = null;
     player = null;
 }
