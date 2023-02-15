@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import { Dungeon } from './dungeon';
 import { Player } from './player';
+import { Direction } from './room';
 
 const app: Express = express();
 const port = 3000;
@@ -20,7 +21,7 @@ app.post('/api/start', (req: Request<{}, {}, {}, { rooms?: number }>, res: Respo
     res.send(dungeon.rooms[0].enter(player));
 });
 
-app.post('/api/go/:direction', (req: Request<{ direction: 'N' | 'S' | 'E' | 'W' }>, res: Response) => {
+app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Response) => {
     if (!dungeon || !player) {
         res.send(`The game is not ready. Use "POST api/start" to generate one.`);
         return;
