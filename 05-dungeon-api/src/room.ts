@@ -17,8 +17,11 @@ export class Room {
         return door?.roomId;
     }
 
-    enter(player: Player): string {
+    enter(player: Player): void {
         player.currentRoomId = this.id;
+    }
+
+    describe(): string {
         let message = `You see ${this.doors.length} ${this.doors.length > 1 ? 'doors' : 'door'} located `;
 
         if (this.doors.length <= 2) {
@@ -30,9 +33,7 @@ export class Room {
             message += doors;
         }
 
-        message += '.';
-
-        return message;
+        return message + '. ';
     }
 
     connect(room: Room): void {
@@ -59,9 +60,9 @@ export class Room {
 }
 
 export class EmptyRoom extends Room {
-    enter(player: Player): string {
+    describe(): string {
         let message = 'The room is empty. ';
-        message += super.enter(player);
+        message += super.describe();
         return message;
     }
 }
@@ -74,20 +75,25 @@ export class SpikesRoom extends Room {
         this.damage = Utils.getRandomItem([10, 20, 50, 80]);
     }
 
-    enter(player: Player): string {
+    enter(player: Player): void {
+        super.enter(player);
         player.hp -= this.damage;
-        let message = `Oh no, spikes! You lost ${this.damage} HP points! Current HP: ${player.hp}. `;
-        message += super.enter(player);
+    }
+
+    describe(): string {
+        let message = `Oh no, spikes! You lost ${this.damage} HP points! `;
+        message += super.describe();
         return message;
     }
 }
 
 export class TreasureRoom extends Room {
-    enter(player: Player): string {
+    enter(player: Player): void {
         super.enter(player);
-
-        const message = 'Congratulations! You found the treasure!';
         player.treasureFound = true;
-        return message;
+    }
+
+    describe(): string {
+        return 'Congratulations! You found the treasure!';
     }
 }

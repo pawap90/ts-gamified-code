@@ -4,6 +4,9 @@ import { Utils } from './utils';
 export class Dungeon {
     private numberOfRooms: number;
     rooms: Room[] = [];
+    get firstRoom(): Room {
+        return this.rooms[0];
+    }
 
     constructor() {
         this.numberOfRooms = Utils.getRandomNumber(7, 13);

@@ -18,7 +18,10 @@ app.post('/api/start', (req: Request<unknown, unknown, unknown, { rooms?: number
     dungeon = new Dungeon();
     dungeon.createRooms();
 
-    res.send(dungeon.rooms[0].enter(player));
+    const room = dungeon.firstRoom;
+    room.enter(player);
+
+    res.send(room.describe());
 });
 
 app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Response) => {
@@ -29,14 +32,16 @@ app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Res
 
     const roomId = dungeon.getRoom(player.currentRoomId)?.getRoomId(req.params.direction);
     if (roomId != undefined) {
-        let message = dungeon.getRoom(roomId)?.enter(player);
+        const room = dungeon.getRoom(roomId);
+        room?.enter(player);
+        let message = room?.describe();
 
         if (player.treasureFound) {
-            message += ' You won!';
+            message += 'You won!';
             resetGame();
         }
         else if (!player?.alive) {
-            message += ' Game over!';
+            message += 'Game over!';
             resetGame();
         }
 
