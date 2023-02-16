@@ -3,7 +3,7 @@ import { Utils } from './utils';
 
 export class Dungeon {
     private numberOfRooms: number;
-    rooms: Room[] = [];
+    private rooms: Room[] = [];
     get firstRoom(): Room {
         return this.rooms[0];
     }
