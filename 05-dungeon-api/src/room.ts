@@ -4,7 +4,7 @@ import { Utils } from './utils';
 export type Direction = 'North' | 'East' | 'South' | 'West';
 const directions: Direction[] = ['North', 'East', 'South', 'West'];
 
-export class Room {
+export abstract class Room {
     id: number;
     doors: { roomId: number; direction: Direction; }[] = [];
 
@@ -21,7 +21,9 @@ export class Room {
         player.currentRoomId = this.id;
     }
 
-    describe(): string {
+    abstract describe(): string;
+
+    protected describeDoors(): string {
         let message = `You see ${this.doors.length} ${this.doors.length > 1 ? 'doors' : 'door'} located `;
 
         if (this.doors.length <= 2) {
@@ -62,7 +64,7 @@ export class Room {
 export class EmptyRoom extends Room {
     describe(): string {
         let message = 'The room is empty. ';
-        message += super.describe();
+        message += this.describeDoors();
         return message;
     }
 }
@@ -82,7 +84,7 @@ export class SpikesRoom extends Room {
 
     describe(): string {
         let message = `Oh no, spikes! You lost ${this.damage} HP points! `;
-        message += super.describe();
+        message += this.describeDoors();
         return message;
     }
 }
