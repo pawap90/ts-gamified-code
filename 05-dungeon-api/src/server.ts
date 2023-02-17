@@ -30,11 +30,13 @@ app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Res
         return;
     }
 
-    const roomId = dungeon.getRoom(player.currentRoomId)?.getRoomId(req.params.direction);
-    if (roomId != undefined) {
-        const room = dungeon.getRoom(roomId);
-        room?.enter(player);
-        let message = room?.describe();
+    const currentRoom = dungeon.getRoom(player.currentRoomId);
+    const targetRoomId = currentRoom?.getRoomId(req.params.direction);
+    
+    if (targetRoomId != undefined) {
+        const targetRoom = dungeon.getRoom(targetRoomId)!;
+        targetRoom.enter(player);
+        let message = targetRoom.describe();
 
         if (player.treasureFound) {
             message += 'You won!';
