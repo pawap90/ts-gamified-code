@@ -1,3 +1,4 @@
+import { Bandit, Enemy, Rat, Troll } from './enemy';
 import { Player } from './player';
 import { Utils } from './utils';
 
@@ -84,6 +85,7 @@ export class SpikesRoom extends Room {
 
     describe(): string {
         let message = `Oh no, spikes! You lost ${this.damage} HP points! `;
+        
         message += this.describeDoors();
         return message;
     }
@@ -97,5 +99,49 @@ export class TreasureRoom extends Room {
 
     describe(): string {
         return 'Congratulations! You found the treasure!';
+    }
+}
+
+export class EnemyRoom extends Room {
+    enemy: Enemy;
+
+    constructor(id: number) {
+        super(id);
+        this.enemy = this.createEnemy();
+    }
+
+    enter(player: Player): void {
+        super.enter(player);
+
+        if (this.enemy.alive)
+            this.enemy.fight(player);
+    }
+
+    describe(): string {
+
+        let message = '';
+
+        if (this.enemy.alive) 
+            message += `You were defeated by ${this.enemy.name}! `;
+        else {
+            message += `You defeated ${this.enemy.name}! `;
+            message += this.describeDoors();
+        }
+
+        return message;
+    }
+
+    private createEnemy(): Enemy {
+        const enemies = ['rat', 'bandit', 'troll'];
+        const randomEnemy = Utils.getRandomItem(enemies);
+
+        switch (randomEnemy) {
+            case 'troll':
+                return new Troll();
+            case 'bandit':
+                return new Bandit();
+            default:
+                return new Rat();
+        }
     }
 }

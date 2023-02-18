@@ -1,4 +1,4 @@
-import { EmptyRoom, Room, SpikesRoom, TreasureRoom } from './room';
+import { EmptyRoom, EnemyRoom, Room, SpikesRoom, TreasureRoom } from './room';
 import { Utils } from './utils';
 
 export class Dungeon {
@@ -45,7 +45,7 @@ export class Dungeon {
         // First room is always empty.
         this.rooms.push(new EmptyRoom(0));
 
-        const distributedRoomTypes = [...Array(7).fill('empty'), ...Array(3).fill('spikes')];
+        const distributedRoomTypes = [...Array(5).fill('empty'), ...Array(2).fill('spikes'), ...Array(3).fill('enemy')];
         for (let i = 1; i < this.numberOfRooms; i++) {
             const randomRoomType = Utils.getRandomItem(distributedRoomTypes);
 
@@ -55,6 +55,9 @@ export class Dungeon {
                     break;
                 case 'spikes':
                     this.rooms.push(new SpikesRoom(i));
+                    break;
+                case 'enemy':
+                    this.rooms.push(new EnemyRoom(i));
                     break;
             }
         }

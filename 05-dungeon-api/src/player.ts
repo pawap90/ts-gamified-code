@@ -1,9 +1,10 @@
-export class Player {
+import { Character } from './character';
+
+export class Player extends Character {
     currentRoomId = 0;
-    hp = 100;
     treasureFound = false;
 
-    get alive(): boolean {
-        return this.hp > 0;
+    constructor() {
+        super('Hero', 20);
     }
 }
