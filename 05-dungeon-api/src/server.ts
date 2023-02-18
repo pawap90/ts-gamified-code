@@ -54,6 +54,15 @@ app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Res
     res.send('No door in that direction!');
 });
 
+app.get('/api/player', (req: Request, res: Response) => {
+    if (!dungeon || !player) {
+        res.send('The game is not ready. Use "POST api/start".');
+        return;
+    }
+
+    res.send(player.describe());
+});
+
 app.listen(port, () => {
     console.info(`⚡️[server]: Server running at http://localhost:${port}`);
 });

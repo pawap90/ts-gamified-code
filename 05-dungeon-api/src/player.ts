@@ -7,4 +7,8 @@ export class Player extends Character {
     constructor() {
         super('Hero', 20);
     }
+
+    describe(): string {
+        return `Player Stats: HP = ${this.hp} | Damage = ${this.damage} | Current room ID = ${this.currentRoomId}`;
+    }
 }
