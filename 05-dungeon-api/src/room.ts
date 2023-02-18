@@ -85,7 +85,7 @@ export class SpikesRoom extends Room {
 
     describe(): string {
         let message = `Oh no, spikes! You lost ${this.damage} HP points! `;
-        
+
         message += this.describeDoors();
         return message;
     }
@@ -121,7 +121,7 @@ export class EnemyRoom extends Room {
 
         let message = '';
 
-        if (this.enemy.alive) 
+        if (this.enemy.alive)
             message += `You were defeated by ${this.enemy.name}! `;
         else {
             message += `You defeated ${this.enemy.name}! `;
@@ -143,5 +143,35 @@ export class EnemyRoom extends Room {
             default:
                 return new Rat();
         }
+    }
+}
+
+export class HealingPotionRoom extends Room {
+    healingPoints = 0;
+    used = false;
+
+    enter(player: Player): void {
+        super.enter(player);
+
+        this.healingPoints = 0;
+        if (player.hp < 100 && !this.used) {
+            this.healingPoints = Utils.getRandomNumber(1, 100 - player.hp);
+            player.hp += this.healingPoints;
+            this.used = true;
+        }
+    }
+
+    describe(): string {
+        let message = 'You found a Healing Potion! ';
+
+        if (this.healingPoints > 0)
+            message += `Your HP is restored by ${this.healingPoints} points. `;
+        else if (this.used)
+            message += 'Empty! You already used this potion. ';
+        else
+            message += 'Your HP was already full. ';
+
+        message += this.describeDoors();
+        return message;
     }
 }
