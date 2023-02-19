@@ -1,12 +1,11 @@
 {
   "name": "05-dungeon-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "A dungeon crawler WebAPI built with TypeScript and Express",
   "scripts": {
     "dev": "tsc-watch --onSuccess \"node ./dist/server.js\""
   },
-  "keywords": [],
-  "author": "",
+  "author": "Paula Santamaría",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2"
