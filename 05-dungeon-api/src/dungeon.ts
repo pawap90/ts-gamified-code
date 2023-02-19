@@ -72,7 +72,7 @@ export class Dungeon {
         const swordRoomId = Utils.getRandomNumber(1, this.rooms.length - 1);
         this.rooms[swordRoomId] = new EpicSwordRoom(swordRoomId);
         
-        // The treasure can override existent room except the first one.
+        // The treasure can override any existent room except the first one.
         const treasureRoomId = Utils.getRandomNumber(1, this.rooms.length - 1);
         this.rooms[treasureRoomId] = new TreasureRoom(treasureRoomId);
     }
