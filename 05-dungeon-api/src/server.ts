@@ -13,16 +13,16 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to TSG Dungeon REST API! Use api/start to begin');
 });
 
-app.post('/api/start', (req: Request<unknown, unknown, unknown, { rooms?: number }>, res: Response) => {
+app.post('/api/start', (req: Request, res: Response) => {
     player = new Player();
-    dungeon = new Dungeon();
-    dungeon.createRooms();
+    dungeon = Dungeon.createRandom();
 
     const room = dungeon.firstRoom;
+    console.info(room);
     room.enter(player);
-
     res.send(room.describe());
 });
+
 
 app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Response) => {
     if (!dungeon || !player) {
