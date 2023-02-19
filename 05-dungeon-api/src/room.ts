@@ -82,7 +82,7 @@ export class SpikesRoom extends Room {
         player.hp -= this.damage;
 
         let message = super.enter(player);
-        message += `Oh no, spikes! You lost ${this.damage} HP points! `;
+        message += `Oh no, spikes! You lost ${this.damage} HP! `;
         if (player.alive)
             message += this.describeDoors();
 
