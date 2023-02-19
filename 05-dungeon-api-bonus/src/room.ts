@@ -83,7 +83,7 @@ export class SpikesRoom extends Room {
         player.hp -= this.damage;
 
         let message = super.enter(player);
-        message += `Oh no, spikes! You lost ${this.damage} HP points! `;
+        message += `Oh no, spikes! You lost ${this.damage} HP! `;
         if (player.alive)
             message += this.describeDoors();
 
@@ -163,10 +163,10 @@ export class HealingPotionRoom extends Room {
             player.hp += healingPoints;
             this.used = true;
 
-            message += `Your HP is restored by ${healingPoints} points. `;
+            message += `Your Health is restored by ${healingPoints} points. `;
         }
         else
-            message += 'Your HP was already full. ';
+            message += 'Your Health was already full. ';
 
         message += this.describeDoors();
 
