@@ -18,11 +18,10 @@ export abstract class Room {
         return door?.roomId;
     }
 
-    enter(player: Player): void {
+    enter(player: Player): string {
         player.currentRoomId = this.id;
+        return `You entered room #${this.id.toString().padStart(2, '0')}. `;
     }
-
-    abstract describe(): string;
 
     protected describeDoors(): string {
         let message = `You see ${this.doors.length} ${this.doors.length > 1 ? 'doors' : 'door'} located `;
@@ -63,9 +62,11 @@ export abstract class Room {
 }
 
 export class EmptyRoom extends Room {
-    describe(): string {
-        let message = 'The room is empty. ';
+    enter(player: Player): string {
+        let message = super.enter(player);
+        message += 'The room is empty. ';
         message += this.describeDoors();
+
         return message;
     }
 }
@@ -78,51 +79,49 @@ export class SpikesRoom extends Room {
         this.damage = Utils.getRandomItem([10, 20, 50, 80]);
     }
 
-    enter(player: Player): void {
-        super.enter(player);
+    enter(player: Player): string {
         player.hp -= this.damage;
-    }
 
-    describe(): string {
-        let message = `Oh no, spikes! You lost ${this.damage} HP points! `;
-
+        let message = super.enter(player);
+        message = `Oh no, spikes! You lost ${this.damage} HP points! `;
         message += this.describeDoors();
+
         return message;
     }
 }
 
 export class TreasureRoom extends Room {
-    enter(player: Player): void {
-        super.enter(player);
+    enter(player: Player): string {
         player.treasureFound = true;
-    }
 
-    describe(): string {
-        return 'Congratulations! You found the treasure!';
+        let message = super.enter(player);
+        message += 'Congratulations! You found the treasure! ';
+
+        return message;
     }
 }
 
 export class EnemyRoom extends Room {
     enemy: Enemy;
+    visited: boolean;
 
     constructor(id: number) {
         super(id);
         this.enemy = this.createEnemy();
+        this.visited = false;
     }
 
-    enter(player: Player): void {
-        super.enter(player);
+    enter(player: Player): string {
+        let message = super.enter(player);
 
-        if (this.enemy.alive)
+        if (this.visited) {
+            message += `You see the defeated ${this.enemy.name} at your feet. `;
+            message += this.describeDoors();
+        }
+        else if (this.enemy.alive) {
             this.enemy.fight(player);
-    }
-
-    describe(): string {
-
-        let message = '';
-
-        if (this.enemy.alive)
             message += `You were defeated by ${this.enemy.name}! `;
+        }
         else {
             message += `You defeated ${this.enemy.name}! `;
             message += this.describeDoors();
@@ -150,28 +149,25 @@ export class HealingPotionRoom extends Room {
     healingPoints = 0;
     used = false;
 
-    enter(player: Player): void {
-        super.enter(player);
+    enter(player: Player): string {
+        let message = super.enter(player);
+        message += 'You found a Healing Potion! ';
 
         this.healingPoints = 0;
-        if (player.hp < 100 && !this.used) {
+        if (this.used)
+            message += 'Empty! You already used this potion. ';
+        else if (player.hp < 100) {
             this.healingPoints = Utils.getRandomNumber(1, 100 - player.hp);
             player.hp += this.healingPoints;
             this.used = true;
-        }
-    }
 
-    describe(): string {
-        let message = 'You found a Healing Potion! ';
-
-        if (this.healingPoints > 0)
             message += `Your HP is restored by ${this.healingPoints} points. `;
-        else if (this.used)
-            message += 'Empty! You already used this potion. ';
+        }
         else
             message += 'Your HP was already full. ';
 
         message += this.describeDoors();
+
         return message;
     }
 }
