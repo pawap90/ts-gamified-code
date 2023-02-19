@@ -2,26 +2,35 @@ import { EmptyRoom, EnemyRoom, EpicSwordRoom, HealingPotionRoom, Room, SpikesRoo
 import { Utils } from './utils';
 
 export class Dungeon {
-    private numberOfRooms: number;
     private rooms: Room[] = [];
     get firstRoom(): Room {
         return this.rooms[0];
     }
 
-    constructor() {
-        this.numberOfRooms = Utils.getRandomNumber(7, 13);
+    private constructor(rooms: Room[]) {
+        this.rooms = rooms;
     }
 
     getRoom(id: number): Room | undefined {
         return this.rooms.find(r => r.id == id);
     }
 
-    createRooms(): void {
-        this.createRandomRooms();
-        this.rooms = this.connectRooms(this.rooms);
+    static createRandom(): Dungeon {
+        const numberOfRooms = Utils.getRandomNumber(7, 13);
+        const rooms = this.createRandomRooms(numberOfRooms);
+        const connectedRooms = this.connectRooms(rooms);
+        return new Dungeon(connectedRooms);
     }
 
-    private connectRooms(rooms: Room[]): Room[] {
+    static createEasyMode(): Dungeon {
+        const firstRoom = new EmptyRoom(0);
+        const treasureRoom = new TreasureRoom(1);
+        firstRoom.connect(treasureRoom);
+
+        return new Dungeon([ firstRoom, treasureRoom ]);
+    }
+
+    private static connectRooms(rooms: Room[]): Room[] {
         if (rooms.length < 2)
             return rooms;
 
@@ -41,39 +50,41 @@ export class Dungeon {
             .concat(this.connectRooms(rightSide));
     }
 
-    private createRandomRooms(): void {
+    private static createRandomRooms(numberOfRooms: number): Room[] {
         // First room is always empty.
-        this.rooms.push(new EmptyRoom(0));
+        const rooms = [new EmptyRoom(0)];
 
         const distributedRoomTypes = [
             ...Array<string>(2).fill('empty'),
             ...Array<string>(3).fill('healing-potion'),
             ...Array<string>(2).fill('spikes'),
             ...Array<string>(3).fill('enemy')];
-        for (let i = 1; i < this.numberOfRooms; i++) {
+        for (let i = 1; i < numberOfRooms; i++) {
             const randomRoomType = Utils.getRandomItem(distributedRoomTypes);
 
             switch (randomRoomType) {
                 case 'empty':
-                    this.rooms.push(new EmptyRoom(i));
+                    rooms.push(new EmptyRoom(i));
                     break;
                 case 'spikes':
-                    this.rooms.push(new SpikesRoom(i));
+                    rooms.push(new SpikesRoom(i));
                     break;
                 case 'enemy':
-                    this.rooms.push(new EnemyRoom(i));
+                    rooms.push(new EnemyRoom(i));
                     break;
                 case 'healing-potion':
-                    this.rooms.push(new HealingPotionRoom(i));
+                    rooms.push(new HealingPotionRoom(i));
                     break;
             }
         }
         // Pick a random room for the sword and treasure.
-        const swordRoomId = Utils.getRandomNumber(1, this.rooms.length - 1);
-        this.rooms[swordRoomId] = new EpicSwordRoom(swordRoomId);
-        
+        const swordRoomId = Utils.getRandomNumber(1, rooms.length - 1);
+        rooms[swordRoomId] = new EpicSwordRoom(swordRoomId);
+
         // The treasure can override any existent room except the first one.
-        const treasureRoomId = Utils.getRandomNumber(1, this.rooms.length - 1);
-        this.rooms[treasureRoomId] = new TreasureRoom(treasureRoomId);
+        const treasureRoomId = Utils.getRandomNumber(1, rooms.length - 1);
+        rooms[treasureRoomId] = new TreasureRoom(treasureRoomId);
+
+        return rooms;
     }
 }
