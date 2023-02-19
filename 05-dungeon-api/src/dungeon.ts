@@ -18,6 +18,14 @@ export class Dungeon {
         return new Dungeon(connectedRooms);
     }
 
+    static createEasyMode(): Dungeon {
+        const firstRoom = new EmptyRoom(0);
+        const treasureRoom = new TreasureRoom(1);
+        firstRoom.connect(treasureRoom);
+
+        return new Dungeon([ firstRoom, treasureRoom ]);
+    }
+
     getRoom(id: number): Room | undefined {
         return this.rooms.find(r => r.id == id);
     }

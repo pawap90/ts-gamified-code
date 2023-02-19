@@ -13,9 +13,12 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to TSG Dungeon REST API! Use api/start to begin');
 });
 
-app.post('/api/start', (req: Request, res: Response) => {
+app.post('/api/start', (req: Request<unknown, unknown, unknown, { easy: boolean }>, res: Response) => {
     player = new Player();
-    dungeon = Dungeon.createRandom();
+    if (req.query.easy)
+        dungeon = Dungeon.createEasyMode();
+    else
+        dungeon = Dungeon.createRandom();
 
     const room = dungeon.firstRoom;
     console.info(room);
