@@ -17,11 +17,16 @@ export abstract class Room {
         return door?.roomId;
     }
 
-    enter(player: Player): void {
+    enter(player: Player): string {
         player.currentRoomId = this.id;
+        return `You entered room #${this.id.toString().padStart(2, '0')}. `;
     }
 
-    abstract describe(): string;
+    connect(room: Room): void {
+        const dir = this.getRandomDirection();
+        this.doors.push({ roomId: room.id, direction: dir });
+        room.doors.push({ roomId: this.id, direction: this.getOppositeDirection(dir) });
+    }
 
     protected describeDoors(): string {
         let message = `You see ${this.doors.length} ${this.doors.length > 1 ? 'doors' : 'door'} located `;
@@ -36,12 +41,6 @@ export abstract class Room {
         }
 
         return message + '. ';
-    }
-
-    connect(room: Room): void {
-        const dir = this.getRandomDirection();
-        this.doors.push({ roomId: room.id, direction: dir });
-        room.doors.push({ roomId: this.id, direction: this.getOppositeDirection(dir) });
     }
 
     private getRandomDirection(): Direction {
@@ -62,9 +61,11 @@ export abstract class Room {
 }
 
 export class EmptyRoom extends Room {
-    describe(): string {
-        let message = 'The room is empty. ';
+    enter(player: Player): string {
+        let message = super.enter(player);
+        message += 'The room is empty. ';
         message += this.describeDoors();
+
         return message;
     }
 }
@@ -77,25 +78,25 @@ export class SpikesRoom extends Room {
         this.damage = Utils.getRandomItem([10, 20, 50, 80]);
     }
 
-    enter(player: Player): void {
-        super.enter(player);
+    enter(player: Player): string {
         player.hp -= this.damage;
-    }
 
-    describe(): string {
-        let message = `Oh no, spikes! You lost ${this.damage} HP points! `;
-        message += this.describeDoors();
+        let message = super.enter(player);
+        message += `Oh no, spikes! You lost ${this.damage} HP points! `;
+        if (player.alive)
+            message += this.describeDoors();
+
         return message;
     }
 }
 
 export class TreasureRoom extends Room {
-    enter(player: Player): void {
-        super.enter(player);
+    enter(player: Player): string {
         player.treasureFound = true;
-    }
 
-    describe(): string {
-        return 'Congratulations! You found the treasure!';
+        let message = super.enter(player);
+        message += 'Congratulations! You found the treasure! ';
+
+        return message;
     }
 }
