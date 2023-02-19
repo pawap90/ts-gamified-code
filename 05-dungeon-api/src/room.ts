@@ -83,8 +83,9 @@ export class SpikesRoom extends Room {
         player.hp -= this.damage;
 
         let message = super.enter(player);
-        message = `Oh no, spikes! You lost ${this.damage} HP points! `;
-        message += this.describeDoors();
+        message += `Oh no, spikes! You lost ${this.damage} HP points! `;
+        if (player.alive)
+            message += this.describeDoors();
 
         return message;
     }
@@ -115,16 +116,19 @@ export class EnemyRoom extends Room {
         let message = super.enter(player);
 
         if (this.visited) {
-            message += `You see the defeated ${this.enemy.name} at your feet. `;
+            message += `The defeated ${this.enemy.name} lies at your feet. `;
             message += this.describeDoors();
-        }
-        else if (this.enemy.alive) {
-            this.enemy.fight(player);
-            message += `You were defeated by ${this.enemy.name}! `;
         }
         else {
-            message += `You defeated ${this.enemy.name}! `;
-            message += this.describeDoors();
+            this.enemy.fight(player);
+            this.visited = true;
+
+            if (this.enemy.alive)
+                message += `You were defeated by ${this.enemy.name}! `;
+            else {
+                message += `You defeated ${this.enemy.name}! `;
+                message += this.describeDoors();
+            }
         }
 
         return message;
