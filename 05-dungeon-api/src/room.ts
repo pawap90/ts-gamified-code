@@ -23,6 +23,12 @@ export abstract class Room {
         return `You entered room #${this.id.toString().padStart(2, '0')}. `;
     }
 
+    connect(room: Room): void {
+        const dir = this.getRandomDirection();
+        this.doors.push({ roomId: room.id, direction: dir });
+        room.doors.push({ roomId: this.id, direction: this.getOppositeDirection(dir) });
+    }
+
     protected describeDoors(): string {
         let message = `You see ${this.doors.length} ${this.doors.length > 1 ? 'doors' : 'door'} located `;
 
@@ -36,12 +42,6 @@ export abstract class Room {
         }
 
         return message + '. ';
-    }
-
-    connect(room: Room): void {
-        const dir = this.getRandomDirection();
-        this.doors.push({ roomId: room.id, direction: dir });
-        room.doors.push({ roomId: this.id, direction: this.getOppositeDirection(dir) });
     }
 
     private getRandomDirection(): Direction {
