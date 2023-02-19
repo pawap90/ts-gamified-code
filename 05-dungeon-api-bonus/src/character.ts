@@ -16,7 +16,8 @@ export abstract class Character {
     }
 
     attack(character: Character): void {
-        if (Utils.getRandomNumber(1, 10) > 2) {
+        // 0.2 chance to miss.
+        if (this.alive && Utils.getRandomNumber(1, 10) > 2) {
             character.hp -= this.damage;
         }
     }
