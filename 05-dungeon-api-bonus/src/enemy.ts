@@ -21,7 +21,7 @@ export class Rat extends Enemy {
         super('Rat', 8);
     }
 
-    describe(): string {
+    override describe(): string {
         return 'Oh no! A rat!';
     }
 }
@@ -31,7 +31,7 @@ export class Bandit extends Enemy {
         super('Bandit', 10);
     }
 
-    describe(): string {
+    override describe(): string {
         return 'A dangerous bandit approaches!';
     }
 }
@@ -41,7 +41,7 @@ export class Troll extends Enemy {
         super('Troll', 15);
     }
 
-    describe(): string {
+    override describe(): string {
         return 'Watch out! A fearsome troll is coming!';
     }
 }

@@ -62,7 +62,7 @@ export abstract class Room {
 }
 
 export class EmptyRoom extends Room {
-    enter(player: Player): string {
+    override enter(player: Player): string {
         let message = super.enter(player);
         message += 'The room is empty. ';
         message += this.describeDoors();
@@ -79,7 +79,7 @@ export class SpikesRoom extends Room {
         this.damage = Utils.getRandomItem([10, 20, 50, 80]);
     }
 
-    enter(player: Player): string {
+    override enter(player: Player): string {
         player.hp -= this.damage;
 
         let message = super.enter(player);
@@ -92,7 +92,7 @@ export class SpikesRoom extends Room {
 }
 
 export class TreasureRoom extends Room {
-    enter(player: Player): string {
+    override enter(player: Player): string {
         player.treasureFound = true;
 
         let message = super.enter(player);
@@ -112,7 +112,7 @@ export class EnemyRoom extends Room {
         this.visited = false;
     }
 
-    enter(player: Player): string {
+    override enter(player: Player): string {
         let message = super.enter(player);
 
         if (this.visited) {
@@ -152,7 +152,7 @@ export class EnemyRoom extends Room {
 export class HealingPotionRoom extends Room {
     used = false;
 
-    enter(player: Player): string {
+    override enter(player: Player): string {
         let message = super.enter(player);
         message += 'You found a Healing Potion! ';
 
@@ -178,7 +178,7 @@ export class EpicSwordRoom extends Room {
     found = false;
     sword?: { name: string, damage: number };
 
-    enter(player: Player): string {
+    override enter(player: Player): string {
         let message = super.enter(player);
         if (this.found)
             message += `Empty! You got the ${this.sword!.name} from this room already. `;
