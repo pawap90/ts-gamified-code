@@ -21,9 +21,7 @@ app.post('/api/start', (req: Request<unknown, unknown, unknown, { easy: boolean 
         dungeon = Dungeon.createRandom();
 
     const room = dungeon.firstRoom;
-    console.info(room);
-    room.enter(player);
-    res.send(room.describe());
+    res.send(room.enter(player));
 });
 
 
@@ -38,8 +36,7 @@ app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Res
     
     if (targetRoomId != undefined) {
         const targetRoom = dungeon.getRoom(targetRoomId)!;
-        targetRoom.enter(player);
-        let message = targetRoom.describe();
+        let message = targetRoom.enter(player);
 
         if (player.treasureFound) {
             message += 'You won!';
