@@ -150,25 +150,50 @@ export class EnemyRoom extends Room {
 }
 
 export class HealingPotionRoom extends Room {
-    healingPoints = 0;
     used = false;
 
     enter(player: Player): string {
         let message = super.enter(player);
         message += 'You found a Healing Potion! ';
 
-        this.healingPoints = 0;
         if (this.used)
             message += 'Empty! You already used this potion. ';
         else if (player.hp < 100) {
-            this.healingPoints = Utils.getRandomNumber(1, 100 - player.hp);
-            player.hp += this.healingPoints;
+            const healingPoints = Utils.getRandomNumber(1, 100 - player.hp);
+            player.hp += healingPoints;
             this.used = true;
 
-            message += `Your HP is restored by ${this.healingPoints} points. `;
+            message += `Your HP is restored by ${healingPoints} points. `;
         }
         else
             message += 'Your HP was already full. ';
+
+        message += this.describeDoors();
+
+        return message;
+    }
+}
+
+export class EpicSwordRoom extends Room {
+    found = false;
+    sword?: { name: string, damage: number };
+
+    enter(player: Player): string {
+        let message = super.enter(player);
+        if (this.found)
+            message += `Empty! You got the ${this.sword!.name} from this room already. `;
+        else {
+
+            this.sword = Utils.getRandomItem([
+                { name: 'Explicit-Any Butter Knife', damage: 5 },
+                { name: 'Ignore-Linter Rusty Sword', damage: 10 },
+                { name: 'Typecalibur Magic Sword', damage: 30 },
+            ]);
+            player.damage += this.sword.damage;
+            this.found = true;
+
+            message += `You found the ${this.sword.name}. Your damage increases ${this.sword.damage} points. `;
+        }
 
         message += this.describeDoors();
 

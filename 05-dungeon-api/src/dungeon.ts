@@ -1,4 +1,4 @@
-import { EmptyRoom, EnemyRoom, HealingPotionRoom, Room, SpikesRoom, TreasureRoom } from './room';
+import { EmptyRoom, EnemyRoom, EpicSwordRoom, HealingPotionRoom, Room, SpikesRoom, TreasureRoom } from './room';
 import { Utils } from './utils';
 
 export class Dungeon {
@@ -46,10 +46,10 @@ export class Dungeon {
         this.rooms.push(new EmptyRoom(0));
 
         const distributedRoomTypes = [
-            ...Array(4).fill('empty'),
-            ...Array(1).fill('healing-potion'),
-            ...Array(2).fill('spikes'),
-            ...Array(3).fill('enemy')];
+            ...Array<string>(2).fill('empty'),
+            ...Array<string>(3).fill('healing-potion'),
+            ...Array<string>(2).fill('spikes'),
+            ...Array<string>(3).fill('enemy')];
         for (let i = 1; i < this.numberOfRooms; i++) {
             const randomRoomType = Utils.getRandomItem(distributedRoomTypes);
 
@@ -68,7 +68,11 @@ export class Dungeon {
                     break;
             }
         }
-        // Pick a random room for the treasure.
+        // Pick a random room for the sword and treasure.
+        const swordRoomId = Utils.getRandomNumber(1, this.rooms.length - 1);
+        this.rooms[swordRoomId] = new EpicSwordRoom(swordRoomId);
+        
+        // The treasure can override existent room except the first one.
         const treasureRoomId = Utils.getRandomNumber(1, this.rooms.length - 1);
         this.rooms[treasureRoomId] = new TreasureRoom(treasureRoomId);
     }
