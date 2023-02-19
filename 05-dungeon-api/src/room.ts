@@ -61,7 +61,7 @@ export abstract class Room {
 }
 
 export class EmptyRoom extends Room {
-    enter(player: Player): string {
+    override enter(player: Player): string {
         let message = super.enter(player);
         message += 'The room is empty. ';
         message += this.describeDoors();
@@ -78,7 +78,7 @@ export class SpikesRoom extends Room {
         this.damage = Utils.getRandomItem([10, 20, 50, 80]);
     }
 
-    enter(player: Player): string {
+    override enter(player: Player): string {
         player.hp -= this.damage;
 
         let message = super.enter(player);
@@ -91,7 +91,7 @@ export class SpikesRoom extends Room {
 }
 
 export class TreasureRoom extends Room {
-    enter(player: Player): string {
+    override enter(player: Player): string {
         player.treasureFound = true;
 
         let message = super.enter(player);
