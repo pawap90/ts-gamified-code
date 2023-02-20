@@ -25,6 +25,7 @@ app.post('/api/start', (req: Request<unknown, unknown, unknown, { easy: boolean 
     res.send(room.enter(player));
 });
 
+
 app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Response) => {
     if (!dungeon || !player) {
         res.send('The game is not ready. Use "POST api/start".');
