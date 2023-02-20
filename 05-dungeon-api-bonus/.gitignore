@@ -1,0 +1,3 @@
+node_modules
+# Ignore transpiled js files.
+dist
