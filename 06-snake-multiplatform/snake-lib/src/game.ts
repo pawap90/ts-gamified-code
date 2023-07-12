@@ -2,6 +2,11 @@ export type Renderer = {
     draw: (game: SnakeGame) => void;
 };
 
+export type GameObject = {
+    x: number;
+    y: number;
+};
+
 export type WorldBoundaries = {
     left: number;
     right: number;
@@ -17,6 +22,7 @@ export class SnakeGame {
     readonly worldBoundaries: WorldBoundaries;
 
     private readonly renderer: Renderer;
+    private gameObjects: GameObject[] = [];
 
     constructor(width: number, height: number, renderer: Renderer) {
         this.width = width;
@@ -34,13 +40,23 @@ export class SnakeGame {
     update(): void {
         if (this.state != 'running') return;
 
-        // Check if snake crashed.
-
-        // Check if snake ate food.
-
-        // Move snake.
+        for (const gameObject of this.gameObjects) {
+            // Check if snake crashed.
+            // Check if snake ate food.
+            // Move snake.
+        }
 
         // Draw current state.
         this.renderer.draw(this);
+    }
+
+    add(gameObject: GameObject): void;
+    add(gameObjects: GameObject[]): void;
+    add(gameObject: GameObject | GameObject[]): void {
+        if (Array.isArray(gameObject)) {
+            this.gameObjects.push(...gameObject);
+        } else {
+            this.gameObjects.push(gameObject);
+        }
     }
 }
