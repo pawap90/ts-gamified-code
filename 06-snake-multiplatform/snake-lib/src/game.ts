@@ -10,7 +10,7 @@ export type WorldBoundaries = {
 };
 
 export class SnakeGame {
-    state: 'running' | 'crashed' = 'running';
+    state: 'running' | 'game over' = 'running';
 
     readonly width: number;
     readonly height: number;
