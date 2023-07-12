@@ -1,7 +1,9 @@
-// snake-lib/src/index.ts
-
-import { SnakeGame } from './game';
+import { Renderer, SnakeGame } from './game';
+import { Snake, createSnake } from './snake';
 
 export { 
-    SnakeGame
+    SnakeGame,
+    Renderer,
+    Snake,
+    createSnake
 };

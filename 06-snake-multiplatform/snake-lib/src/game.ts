@@ -3,6 +3,7 @@ export type Renderer = {
 };
 
 export type GameObject = {
+    name: string;
     x: number;
     y: number;
 };
@@ -16,13 +17,13 @@ export type WorldBoundaries = {
 
 export class SnakeGame {
     state: 'running' | 'game over' = 'running';
+    gameObjects: GameObject[] = [];
 
     readonly width: number;
     readonly height: number;
     readonly worldBoundaries: WorldBoundaries;
 
     private readonly renderer: Renderer;
-    private gameObjects: GameObject[] = [];
 
     constructor(width: number, height: number, renderer: Renderer) {
         this.width = width;
