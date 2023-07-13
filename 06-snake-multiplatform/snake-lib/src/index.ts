@@ -1,9 +1,9 @@
 import { Renderer, SnakeGame } from './game';
-import { Snake, createSnake } from './snake';
+import { SnakeHead, createSnake } from './snake';
 
 export { 
     SnakeGame,
     Renderer,
-    Snake,
+    SnakeHead,
     createSnake
 };

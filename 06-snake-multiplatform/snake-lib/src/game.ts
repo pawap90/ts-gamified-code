@@ -8,6 +8,8 @@ export type GameObject = {
     y: number;
 };
 
+export type Direction = 'up' | 'down' | 'left' | 'right';
+
 export type WorldBoundaries = {
     left: number;
     right: number;

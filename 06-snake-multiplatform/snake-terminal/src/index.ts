@@ -1,9 +1,9 @@
-import { SnakeGame, createSnake } from 'snake-lib';
+import { SnakeGame, createSnakeHead } from 'snake-lib';
 import { TerminalRenderer } from './terminal-renderer';
 
 const game = new SnakeGame(30, 20, TerminalRenderer);
-const snake = createSnake(15, 10, 'right');
-game.add(snake.chunks);
+const snakeHead = createSnakeHead(15, 10, 'right');
+game.add(snakeHead);
 
 // Game loop.
 const timer = setInterval(() => {
