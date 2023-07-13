@@ -1,13 +1,15 @@
-import type { Direction, GameObject } from './game';
+import type { GameObject } from './game';
 
 export type SnakeChunk = GameObject & {
     name: 'snake-chunk';
     next?: SnakeChunk;
 };
 
+type Direction = 'up' | 'down' | 'left' | 'right';
+
 export type SnakeHead = SnakeChunk & { direction: Direction };
 
-export function createSnake(x: number, y: number, direction: Direction): SnakeHead {
+export function createSnakeHead(x: number, y: number, direction: Direction): SnakeHead {
     return { ...createChunk(x, y), direction };
 }
 
@@ -15,7 +17,7 @@ function createChunk(x: number, y: number): SnakeChunk {
     return { x, y, name: 'snake-chunk' };
 }
 
-export function updateSnake(head: SnakeHead): void {
+export function updateSnakePosition(head: SnakeHead): void {
     let previous = { x: head.x, y: head.y };
 
     // Move the first chunk.
@@ -43,4 +45,12 @@ export function updateSnake(head: SnakeHead): void {
         previous = temp;
         current = current.next;
     }
+}
+
+export function isSnakeChunk(object: GameObject): object is SnakeChunk {
+    return (object as SnakeChunk).name == 'snake-chunk';
+}
+
+export function isSnakeHead(object: GameObject): object is SnakeHead {
+    return (object as SnakeHead).name == 'snake-chunk';
 }
