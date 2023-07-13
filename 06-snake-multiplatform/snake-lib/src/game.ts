@@ -1,3 +1,5 @@
+import { isSnakeHead, updateSnakePosition } from './snake';
+
 export type Renderer = {
     draw: (game: SnakeGame) => void;
 };
@@ -7,8 +9,6 @@ export type GameObject = {
     x: number;
     y: number;
 };
-
-export type Direction = 'up' | 'down' | 'left' | 'right';
 
 export type WorldBoundaries = {
     left: number;
@@ -47,6 +47,9 @@ export class SnakeGame {
             // Check if snake crashed.
             // Check if snake ate food.
             // Move snake.
+            if (isSnakeHead(gameObject)) {
+                updateSnakePosition(gameObject);
+            }
         }
 
         // Draw current state.
