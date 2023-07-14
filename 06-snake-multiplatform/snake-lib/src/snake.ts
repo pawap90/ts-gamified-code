@@ -47,10 +47,20 @@ export function updateSnakePosition(head: SnakeHead): void {
     }
 }
 
+export function addChunk(head: SnakeChunk): SnakeChunk {
+    let current = head;
+    while (current.next) {
+        current = current.next;
+    }
+
+    current.next = createChunk(current.x, current.y);
+    return current.next;
+}
+
 export function isSnakeChunk(object: GameObject): object is SnakeChunk {
     return (object as SnakeChunk).name == 'snake-chunk';
 }
 
 export function isSnakeHead(object: GameObject): object is SnakeHead {
-    return (object as SnakeHead).name == 'snake-chunk';
+    return isSnakeChunk(object) && (object as SnakeHead).direction != undefined;
 }

@@ -1,4 +1,4 @@
-import { SnakeGame, Renderer } from 'snake-lib';
+import { SnakeGame, Renderer, isSnakeChunk, isFood,  } from 'snake-lib';
 
 export const TerminalRenderer: Renderer = {
     draw(game: SnakeGame) {
@@ -42,7 +42,8 @@ function toMatrix(game: SnakeGame): string[][] {
 
     // Draw game objects.
     for (const gameObject of game.gameObjects) {
-        matrix[gameObject.y][gameObject.x] = '■';
+        if (isSnakeChunk(gameObject)) matrix[gameObject.y][gameObject.x] = '■';
+        if (isFood(gameObject)) matrix[gameObject.y][gameObject.x] = '●';
     }
 
     return matrix;

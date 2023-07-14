@@ -1,4 +1,5 @@
-import { isSnakeHead, updateSnakePosition } from './snake';
+import { createFood, isFood } from './food';
+import { type SnakeHead, addChunk, isSnakeHead, updateSnakePosition } from './snake';
 
 export type Renderer = {
     draw: (game: SnakeGame) => void;
@@ -43,14 +44,28 @@ export class SnakeGame {
     update(): void {
         if (this.state != 'running') return;
 
-        for (const gameObject of this.gameObjects) {
-            // Check if snake crashed.
-            // Check if snake ate food.
-            // Move snake.
+        this.gameObjects.forEach((gameObject, index) => {
+            // TODO Check if snake crashed.
+
             if (isSnakeHead(gameObject)) {
+                // Move snake.
                 updateSnakePosition(gameObject);
             }
-        }
+
+            // Check if snake ate food.
+            if (isFood(gameObject)) {
+                const snakeHead = this.gameObjects.find((go) => {
+                    return isSnakeHead(go) && gameObject.x == go.x && gameObject.y == go.y;
+                }) as SnakeHead | undefined;
+
+                if (snakeHead) {
+                    const newChunk = addChunk(snakeHead);
+                    this.gameObjects.push(newChunk);
+                    // Replace food.
+                    this.gameObjects[index] = createFood(this.worldBoundaries);
+                }
+            }
+        });
 
         // Draw current state.
         this.renderer.draw(this);

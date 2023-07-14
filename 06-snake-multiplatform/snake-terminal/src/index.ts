@@ -1,10 +1,13 @@
-import { SnakeGame, createSnakeHead } from 'snake-lib';
+import { SnakeGame, createFood, createSnakeHead } from 'snake-lib';
 import { TerminalRenderer } from './terminal-renderer';
 import { emitKeypressEvents } from 'readline';
 
 const game = new SnakeGame(30, 20, TerminalRenderer);
 const snakeHead = createSnakeHead(15, 10, 'right');
 game.add(snakeHead);
+
+const food = createFood(game.worldBoundaries);
+game.add(food);
 
 emitKeypressEvents(process.stdin);
 

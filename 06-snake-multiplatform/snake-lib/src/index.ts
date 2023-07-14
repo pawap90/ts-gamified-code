@@ -1,9 +1,14 @@
-import { Renderer, SnakeGame } from './game';
-import { SnakeHead, createSnakeHead } from './snake';
+import { type Food, createFood, isFood } from './food';
+import { type Renderer, SnakeGame } from './game';
+import { type SnakeHead, createSnakeHead, isSnakeChunk } from './snake';
 
 export { 
     SnakeGame,
     Renderer,
     SnakeHead,
-    createSnakeHead
+    createSnakeHead,
+    isSnakeChunk,
+    Food,
+    createFood,
+    isFood
 };
