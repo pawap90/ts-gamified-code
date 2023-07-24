@@ -1,4 +1,4 @@
-import type { GameObject } from './game';
+import type { GameObject, WorldBoundaries } from './game';
 
 export type SnakeChunk = GameObject & {
     name: 'snake-chunk';
@@ -63,4 +63,24 @@ export function isSnakeChunk(object: GameObject): object is SnakeChunk {
 
 export function isSnakeHead(object: GameObject): object is SnakeHead {
     return isSnakeChunk(object) && (object as SnakeHead).direction != undefined;
+}
+
+export function crashedWithItself(head: SnakeHead): boolean {
+    let current = head.next;
+    while (current) {
+        if (head.x == current.x && head.y == current.y) {
+            return true;
+        }
+        current = current.next;
+    }
+    return false;
+}
+
+export function crashedWithWorld(head: SnakeHead, world: WorldBoundaries): boolean {
+    return (
+        head.x < world.left ||
+        head.x > world.right ||
+        head.y < world.top ||
+        head.y > world.bottom
+    );
 }

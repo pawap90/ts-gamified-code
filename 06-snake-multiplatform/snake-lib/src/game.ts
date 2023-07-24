@@ -1,5 +1,12 @@
 import { createFood, isFood } from './food';
-import { type SnakeHead, addChunk, isSnakeHead, updateSnakePosition } from './snake';
+import {
+    type SnakeHead,
+    addChunk,
+    isSnakeHead,
+    updateSnakePosition,
+    crashedWithItself,
+    crashedWithWorld
+} from './snake';
 
 export type Renderer = {
     draw: (game: SnakeGame) => void;
@@ -45,11 +52,17 @@ export class SnakeGame {
         if (this.state != 'running') return;
 
         this.gameObjects.forEach((gameObject, index) => {
-            // TODO Check if snake crashed.
-
             if (isSnakeHead(gameObject)) {
                 // Move snake.
                 updateSnakePosition(gameObject);
+
+                // Check if snake crashed.
+                if (
+                    crashedWithItself(gameObject) ||
+                    crashedWithWorld(gameObject, this.worldBoundaries)
+                ) {
+                    this.state = 'game over';
+                }
             }
 
             // Check if snake ate food.
