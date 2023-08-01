@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+      "target": "es2016",
+      "module": "CommonJS",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "skipLibCheck": true,
+
+      "outDir": "dist", /* Generate transpiled files here */    
+      "declaration": true /* Generate declaration files for the package. */
+  },
+  "include": ["src/**/*"]
+}
