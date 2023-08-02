@@ -9,10 +9,8 @@ webRenderer.createBoard();
 const game = new SnakeGame(webRenderer.width, webRenderer.height, webRenderer);
 
 const snakeHead = createSnakeHead(6, 6, 'right');
-game.add(snakeHead);
-
 const food = createFood(game.worldBoundaries);
-game.add(food);
+game.add([food, snakeHead]);
 
 // Handle user input.
 document.onkeydown = (e: KeyboardEvent) => {
