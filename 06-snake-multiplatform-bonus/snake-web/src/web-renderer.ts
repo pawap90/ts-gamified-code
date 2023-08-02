@@ -1,6 +1,6 @@
-import * as SnakeLib from 'snake-lib';
+import { Renderer, SnakeGame, isFood, isSnakeChunk } from 'snake-lib';
 
-export class WebRenderer implements SnakeLib.Renderer {
+export class WebRenderer implements Renderer {
     readonly boardId: string;
     width: number;
     height: number;
@@ -11,7 +11,7 @@ export class WebRenderer implements SnakeLib.Renderer {
         this.height = height;
     }
 
-    draw(game: SnakeLib.SnakeGame) {
+    draw(game: SnakeGame) {
         // Draw world on board.
         this.drawBoard(game);
 
@@ -29,8 +29,8 @@ export class WebRenderer implements SnakeLib.Renderer {
 
         board.style.gridTemplateColumns = `repeat(${this.width}, 1fr)`;
         board.style.gridTemplateRows = `repeat(${this.height}, 1fr)`;
-        board.style.maxWidth = `${this.width * 26}px`;
-        board.style.maxHeight = `${this.height * 26}px`;
+        board.style.maxWidth = `${this.width * 52}px`;
+        board.style.maxHeight = `${this.height * 52}px`;
 
         // Add rows and cols
         for (let i = 0; i < this.height; i++) {
@@ -42,7 +42,7 @@ export class WebRenderer implements SnakeLib.Renderer {
         }
     }
 
-    private drawBoard(game: SnakeLib.SnakeGame) {
+    private drawBoard(game: SnakeGame) {
         const board = document.getElementById(this.boardId);
 
         if (!board) {
@@ -57,11 +57,11 @@ export class WebRenderer implements SnakeLib.Renderer {
 
         // Draw game objects.
         for (const gameObject of game.gameObjects) {
-            if (SnakeLib.isFood(gameObject)) {
+            if (isFood(gameObject)) {
                 const food = document.getElementById(`col-${gameObject.y}-${gameObject.x}`);
                 food?.classList.add('food');
             }
-            if (SnakeLib.isSnakeChunk(gameObject)) {
+            if (isSnakeChunk(gameObject)) {
                 const cell = document.getElementById(`col-${gameObject.y}-${gameObject.x}`);
                 cell?.classList.add('snake');
             }

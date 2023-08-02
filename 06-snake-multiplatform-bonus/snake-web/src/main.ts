@@ -1,17 +1,17 @@
 import './style.css';
 
-import * as SnakeLib from 'snake-lib';
+import { SnakeGame, createFood, createSnakeHead } from 'snake-lib';
 import { WebRenderer } from './web-renderer';
 
-const webRenderer = new WebRenderer('board', 20, 20);
+const webRenderer = new WebRenderer('board', 12, 12);
 webRenderer.createBoard();
 
-const game = new SnakeLib.SnakeGame(webRenderer.width, webRenderer.height, webRenderer);
+const game = new SnakeGame(webRenderer.width, webRenderer.height, webRenderer);
 
-const snakeHead = SnakeLib.createSnakeHead(15, 10, 'right');
+const snakeHead = createSnakeHead(6, 6, 'right');
 game.add(snakeHead);
 
-const food = SnakeLib.createFood(game.worldBoundaries);
+const food = createFood(game.worldBoundaries);
 game.add(food);
 
 // Handle user input.
