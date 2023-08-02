@@ -57,13 +57,13 @@ export class WebRenderer implements SnakeLib.Renderer {
 
         // Draw game objects.
         for (const gameObject of game.gameObjects) {
-            if (SnakeLib.isSnakeChunk(gameObject)) {
-                const cell = document.getElementById(`col-${gameObject.y}-${gameObject.x}`);
-                cell?.classList.add('snake');
-            }
             if (SnakeLib.isFood(gameObject)) {
                 const food = document.getElementById(`col-${gameObject.y}-${gameObject.x}`);
                 food?.classList.add('food');
+            }
+            if (SnakeLib.isSnakeChunk(gameObject)) {
+                const cell = document.getElementById(`col-${gameObject.y}-${gameObject.x}`);
+                cell?.classList.add('snake');
             }
         }
     }
