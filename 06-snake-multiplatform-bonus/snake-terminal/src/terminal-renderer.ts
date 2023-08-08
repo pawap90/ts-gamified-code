@@ -22,7 +22,7 @@ function toMatrix(game: SnakeGame): string[][] {
 
     // Initialize board.
     for (let i = 0; i < board.height; i++) {
-        matrix[i] = new Array(board.width).fill('x');
+        matrix[i] = new Array(board.width).fill(' ');
     }
 
     // Draw left & right boundaries
