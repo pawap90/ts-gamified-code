@@ -1,7 +1,7 @@
 {
   "name": "snake-lib",
   "version": "1.0.0",
-  "description": "",
+  "description": "A library to run a snake game using custom renderers",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -11,7 +11,7 @@
     "dist/**/*"
   ],
   "keywords": [],
-  "author": "",
+  "author": "Paula Santamaría",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.4.1",

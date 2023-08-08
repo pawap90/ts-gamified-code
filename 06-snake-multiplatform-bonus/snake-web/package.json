@@ -1,8 +1,10 @@
 {
     "name": "snake-web",
     "private": true,
-    "version": "0.0.0",
+    "version": "1.0.0",
     "type": "module",
+    "description": "The web version of the snake game powered by snake-lib",
+    "author": "Paula Santamaría",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",

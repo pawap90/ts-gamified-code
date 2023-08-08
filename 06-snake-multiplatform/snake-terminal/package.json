@@ -1,14 +1,14 @@
 {
   "name": "snake-terminal",
   "version": "1.0.0",
-  "description": "",
+  "description": "The terminal version of the snake game powered by snake-lib",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Paula Santamaría",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.4.1",
