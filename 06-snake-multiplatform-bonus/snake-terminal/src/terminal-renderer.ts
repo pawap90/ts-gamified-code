@@ -18,32 +18,34 @@ export const TerminalRenderer: Renderer = {
 
 function toMatrix(game: SnakeGame): string[][] {
     const matrix: string[][] = [];
+    const board = { width: game.width + 2, height: game.height + 2 }
 
-    // Initialize.
-    for (let i = 0; i <= game.height; i++) {
-        matrix[i] = new Array(game.width).fill(' ');
+    // Initialize board.
+    for (let i = 0; i < board.height; i++) {
+        matrix[i] = new Array(board.width).fill('x');
     }
 
     // Draw left & right boundaries
-    for (let i = 0; i <= game.height; i++) {
+    for (let i = 0; i < board.height; i++) {
         matrix[i][0] = '│';
-        matrix[i][game.width] = '│';
+        matrix[i][board.width - 1] = '│';
     }
 
     // Draw top & bottom boundaries.
     matrix[0].fill('─');
-    matrix[game.height].fill('─');
+    matrix[board.height - 1].fill('─');
 
     // Draw corners.
     matrix[0][0] = '┌';
-    matrix[0][game.width] = '┐';
-    matrix[game.height][0] = '└';
-    matrix[game.height][game.width] = '┘';
+    matrix[0][board.width - 1] = '┐';
+    matrix[board.height - 1][0] = '└';
+    matrix[board.height - 1][board.width - 1] = '┘';
 
     // Draw game objects.
     for (const gameObject of game.gameObjects) {
-        if (isSnakeChunk(gameObject)) matrix[gameObject.y][gameObject.x] = '■';
-        if (isFood(gameObject)) matrix[gameObject.y][gameObject.x] = '●';
+        const boardPosition = { x: gameObject.x + 1, y: gameObject.y + 1 };
+        if (isSnakeChunk(gameObject)) matrix[boardPosition.y][boardPosition.x] = '■';
+        if (isFood(gameObject)) matrix[boardPosition.y][boardPosition.x] = '●';
     }
 
     return matrix;

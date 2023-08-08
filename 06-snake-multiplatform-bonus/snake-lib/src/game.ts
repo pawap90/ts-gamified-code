@@ -41,9 +41,9 @@ export class SnakeGame {
         this.renderer = renderer;
 
         this.worldBoundaries = {
-            left: 1,
+            left: 0,
             right: width - 1,
-            top: 1,
+            top: 0,
             bottom: height - 1
         };
     }
