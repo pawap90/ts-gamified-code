@@ -41,3 +41,5 @@ export default defineConfig({
 ```
 
 This tells Vite to include the `snake-lib` package in the bundle. More info [here](https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-include)
+
+More info about dependency bundling and monorepos [here](https://vitejs.dev/guide/dep-pre-bundling.html#monorepos-and-linked-dependencies).
