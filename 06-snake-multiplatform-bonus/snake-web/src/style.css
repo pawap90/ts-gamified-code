@@ -1,0 +1,46 @@
+/* src/style.css */
+body {
+  background-color: #1b1924;
+}
+
+#app {
+  margin: 0 auto;
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+}
+
+#monitor {
+  background-color: #d9d9bf;
+  border-radius: 64px;
+  border: 4px solid #b3b376;
+
+  padding: 48px;
+}
+
+#screen {
+  background-color: #1b1924;
+  border-radius: 30px;
+  border: 4px solid #5f597a;
+  padding: 36px;
+  display: inline-block;
+}
+
+#board {
+  display: grid;
+  gap: 4px;
+}
+
+#board>div {
+  background-color: #efefe1;
+  width: 48px;
+  height: 48px;
+}
+
+#board>div.snake {
+  background-color: #3a992e;
+}
+
+#board>div.food {
+  background-color: #e27d09;
+}
