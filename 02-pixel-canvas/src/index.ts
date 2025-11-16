@@ -10,12 +10,16 @@ function createCanvas(): void {
     const canvasSize = 8;
     const canvas = document.getElementById('canvas');
 
+    if (!canvas)
+        throw new Error('Canvas element not found');
+
     for (let x = 0; x < canvasSize; x++) {
         for (let y = 0; y < canvasSize; y++) {
-            pixels.push({ x: x, y: y, active: false });
+            const pixel = { x: x, y: y, active: false };
+            pixels.push(pixel);
             
-            const pixelBtn = createPixel({ x: x, y: y, active: false });
-            canvas?.append(pixelBtn);
+            const pixelBtn = createPixel(pixel);
+            canvas.append(pixelBtn);
         }
     }
 }

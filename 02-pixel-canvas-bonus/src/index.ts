@@ -1,27 +1,34 @@
 const pixels: { x: number, y: number, colorHex: string }[] = [];
 const palette = ['#fcffc0', '#74a33f', '#2a584f', '#6eb8a8', '#c6505a', '#2f142f', '#774448', '#ee9c5d'];
-const currentColor = { index: 0, hex: palette[0] };
+const currentColor = { index: 0, hex: palette[0] || '#ffffff' };
 
 function updateState(x: number, y: number): void {
     const pixelToUpdate = pixels.find(p => p.x == x && p.y == y);
-    if (pixelToUpdate)
+    if (pixelToUpdate && currentColor.hex)
         pixelToUpdate.colorHex = currentColor.hex;
 }
 
 function setNextColor(): void {
     currentColor.index = currentColor.index < palette.length - 1 ? currentColor.index + 1 : 0;
-    currentColor.hex = palette[currentColor.index];
+    const nextColor = palette[currentColor.index];
+    if (!nextColor)
+        throw new Error('Color not found in palette');
+
+    currentColor.hex = nextColor;
 }
 
 function createCanvas(): void {
     const canvasSize = 8;
     const canvas = document.getElementById('canvas');
 
+    if (!canvas)
+        throw new Error('Canvas element not found');
+
     for (let x = 0; x < canvasSize; x++) {
         for (let y = 0; y < canvasSize; y++) {
             pixels.push({ x: x, y: y, colorHex: currentColor.hex });
             const pixelBtn = createPixelBtn({ x: x, y: y, active: false });
-            canvas?.append(pixelBtn);
+            canvas.append(pixelBtn);
         }
     }
 
