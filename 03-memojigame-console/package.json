@@ -11,9 +11,9 @@
   "author": "Paula Santamaría",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^18.6.4",
-    "@types/readline-sync": "^1.4.4",
-    "typescript": "^4.7.4"
+    "@types/node": "^24.10.1",
+    "@types/readline-sync": "^1.4.8",
+    "typescript": "^5.9.0"
   },
   "dependencies": {
     "readline-sync": "^1.4.10"
