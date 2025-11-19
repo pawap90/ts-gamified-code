@@ -1,10 +1,10 @@
 type Fish = {
-    name: string,
-    icon: string,
-    amount: number,
-    value: number,
-    probability: number
-}
+    name: string;
+    icon: string;
+    amount: number;
+    value: number;
+    probability: number;
+};
 
 const fishes: Fish[] = [
     { name: 'boot', icon: '🥾', amount: 0, value: 1, probability: 4 },
@@ -42,11 +42,11 @@ export function getRandomFish(): Fish | null {
 
     // Distribute fish according to their probability.
     const distribution = fishes.map((f, index) => {
-        const distributedIndex = [...Array<number | null>(f.probability).fill(index)];
+        const distributedIndex = Array<number>(f.probability).fill(index);
         return distributedIndex;
     });
 
-    const flatDistribution = distribution.flat();
+    const flatDistribution: (number | null)[] = distribution.flat();
 
     // Add null for missed attempts.
     const missedAttemptsProbability = distribution.length;
@@ -55,8 +55,9 @@ export function getRandomFish(): Fish | null {
     // Get random fish from distribution.
     const fishIndex = flatDistribution[Math.floor(Math.random() * flatDistribution.length)];
 
-    if (fishIndex != null)
+    if (fishIndex !== null) {
         return fishes[fishIndex];
+    }
 
     return null;
 }
