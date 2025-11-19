@@ -1,4 +1,8 @@
 
+const STATE_IDLE = 'idle';
+const STATE_FLIPPED = 'flipped';
+const STATE_CLEARED = 'cleared';
+
 // This will keep track of each tile's state.
 let tiles: { emoji: string, state: string }[] = [];
 
@@ -16,12 +20,17 @@ function duplicate(emojis: string[]): string[] {
 /** Shuffle emoji array so the tiles appear in different orders each time */
 function shuffle(emojis: string[]): string[] {
     for (let i = 0; i < emojis.length; i++) {
-        const tile = emojis[i];
-        const randomNewPosition = Math.floor(Math.random() * emojis.length);
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        const currentEmoji = emojis[i];
 
-        // Swap the current tile for the one in the new position.
-        emojis[i] = emojis[randomNewPosition]
-        emojis[randomNewPosition] = tile;
+        // TypeScript requires us to check these might be undefined, even though they can't be
+        // We'll see better ways to handle this in future levels.
+        if (!emojis[randomIndex] || !currentEmoji)
+            throw new Error('Unexpected error during shuffling. Index out of bounds.');
+
+        // Swap [i] value with [randomIndex] value.
+        emojis[i] = emojis[randomIndex];
+        emojis[randomIndex] = currentEmoji;
     }
 
     return emojis;
@@ -29,12 +38,10 @@ function shuffle(emojis: string[]): string[] {
 
 /** Create tile array from emoji array */
 function createTiles(emojis: string[]): { emoji: string, state: string }[] {
-    return emojis.map(e => {
-        return {
-            emoji: e,
-            state: 'idle'
-        }
-    });
+    return emojis.map(e => ({
+        emoji: e,
+        state: STATE_IDLE
+    }));
 }
 
 /** Add a button for each tile to the board */
@@ -73,15 +80,15 @@ function refreshBoard(): void {
         if (!tileState) break;
 
         switch (tileState.state) {
-            case 'idle':
+            case STATE_IDLE:
                 tileBtn.innerHTML = '❓';
                 break;
-            case 'flipped':
+            case STATE_FLIPPED:
                 tileBtn.innerHTML = tileState.emoji;
                 break;
-            case 'cleared':
+            case STATE_CLEARED:
                 tileBtn.innerHTML = tileState.emoji;
-                tileBtn.style.backgroundColor = 'green';
+                tileBtn.style.backgroundColor = '#90ee90'; 
                 tileBtn.disabled = true;
                 break;
         }
@@ -92,19 +99,19 @@ function refreshBoard(): void {
 function updateState(clickedTileBtn: HTMLButtonElement) {
     const currentTile = getTile(clickedTileBtn);
 
-    if (currentTile && currentTile.state === 'idle') {
-        const flippedTiles = tiles.filter(p => p.state == 'flipped');
-        if (flippedTiles.length == 2) {
-            flippedTiles[0].state = 'idle';
-            flippedTiles[1].state = 'idle';
-            currentTile.state = 'flipped';
+    if (currentTile && currentTile.state === STATE_IDLE) {
+        const flippedTiles = tiles.filter(p => p.state === STATE_FLIPPED);
+        if (flippedTiles.length === 2 && flippedTiles[0] && flippedTiles[1]) {
+            flippedTiles[0].state = STATE_IDLE;
+            flippedTiles[1].state = STATE_IDLE;
+            currentTile.state = STATE_FLIPPED;
         }
-        else if (flippedTiles.length == 1 && flippedTiles[0].emoji == currentTile.emoji) {
-            flippedTiles[0].state = 'cleared';
-            currentTile.state = 'cleared';
+        else if (flippedTiles.length === 1 && flippedTiles[0] && flippedTiles[0].emoji === currentTile.emoji) {
+            flippedTiles[0].state = STATE_CLEARED;
+            currentTile.state = STATE_CLEARED;
         }
         else {
-            currentTile.state = 'flipped';
+            currentTile.state = STATE_FLIPPED;
         }
     }
 }
