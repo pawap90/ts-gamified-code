@@ -1,5 +1,5 @@
 import { BaitManager } from "./bait";
-import { initialize as initializeFish, getRandomFish, Fish, add } from "./fish";
+import { initialize as initializeFish, getRandomFish, type Fish, add } from "./fish";
 import Wallet from "./wallet";
 
 type State = 'fishing' | 'shopping';
@@ -70,5 +70,4 @@ function updateState(): void {
 
             break;
     }
-
 }
