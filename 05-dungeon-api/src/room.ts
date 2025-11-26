@@ -36,7 +36,8 @@ export abstract class Room {
         }
         else {
             let doors = this.doors.slice(0, this.doors.length - 1).map(d => d.direction).join(', ');
-            doors += `, and ${this.doors[this.doors.length - 1].direction}`;
+            let lastDoor = this.doors[this.doors.length - 1]!; // We can safely use a non-null assertion because length > 2
+            doors += `, and ${lastDoor.direction}`;
             message += doors;
         }
 

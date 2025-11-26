@@ -1,7 +1,8 @@
-import express, { Express, Request, Response } from 'express';
+import * as express from "express";
+import type { Express, Request, Response } from 'express';
+import type { Direction } from './room';
 import { Dungeon } from './dungeon';
 import { Player } from './player';
-import { Direction } from './room';
 
 const app: Express = express();
 const port = 3000;
