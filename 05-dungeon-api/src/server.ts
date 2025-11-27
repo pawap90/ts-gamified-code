@@ -1,5 +1,4 @@
-import * as express from "express";
-import type { Express, Request, Response } from 'express';
+import express, { type Express, type Request, type Response } from 'express';
 import type { Direction } from './room';
 import { Dungeon } from './dungeon';
 import { Player } from './player';
@@ -34,7 +33,7 @@ app.post('/api/go/:direction', (req: Request<{ direction: Direction }>, res: Res
 
     const currentRoom = dungeon.getRoom(player.currentRoomId);
     const targetRoomId = currentRoom?.getRoomId(req.params.direction);
-    
+
     if (targetRoomId != undefined) {
         const targetRoom = dungeon.getRoom(targetRoomId)!;
         let message = targetRoom.enter(player);

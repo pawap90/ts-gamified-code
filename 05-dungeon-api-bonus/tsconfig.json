@@ -13,6 +13,8 @@
     "exactOptionalPropertyTypes": true,
 
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "esModuleInterop": true // Required to use modern ESM-style imports with Express
   }
 }

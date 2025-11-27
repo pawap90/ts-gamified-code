@@ -1,5 +1,4 @@
-import * as express from "express";
-import type { Express, Request, Response } from 'express';
+import express, { type Express, type Request, type Response } from 'express';
 import type { Direction } from './room';
 import { Dungeon } from './dungeon';
 import { Player } from './player';
