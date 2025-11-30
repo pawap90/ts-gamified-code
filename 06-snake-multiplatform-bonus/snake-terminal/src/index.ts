@@ -1,5 +1,5 @@
 import { SnakeGame, createFood, createSnakeHead } from 'snake-lib';
-import { TerminalRenderer } from './terminal-renderer';
+import { TerminalRenderer } from './terminal-renderer.js';
 import { emitKeypressEvents } from 'readline';
 
 const game = new SnakeGame(30, 20, TerminalRenderer);

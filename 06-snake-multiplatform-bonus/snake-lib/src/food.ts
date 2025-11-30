@@ -1,4 +1,4 @@
-import type { GameObject, WorldBoundaries } from "./game";
+import type { GameObject, WorldBoundaries } from "./game.js";
 
 export type Food = GameObject & {
     name: 'food';
