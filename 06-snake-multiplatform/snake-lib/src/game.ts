@@ -1,4 +1,4 @@
-import { createFood, isFood } from './food';
+import { createFood, isFood } from './food.js';
 import {
     type SnakeHead,
     addChunk,
@@ -6,7 +6,7 @@ import {
     updateSnakePosition,
     crashedWithItself,
     crashedWithWorld
-} from './snake';
+} from './snake.js';
 
 export type Renderer = {
     draw: (game: SnakeGame) => void;

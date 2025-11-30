@@ -1,6 +1,6 @@
-import { type Food, createFood, isFood } from './food';
-import { type Renderer, SnakeGame } from './game';
-import { type SnakeHead, createSnakeHead, isSnakeChunk } from './snake';
+import { type Food, createFood, isFood } from './food.js';
+import { type Renderer, SnakeGame } from './game.js';
+import { type SnakeHead, createSnakeHead, isSnakeChunk } from './snake.js';
 
 export { 
     SnakeGame,

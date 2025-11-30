@@ -2,7 +2,9 @@
   "name": "snake-lib",
   "version": "1.0.0",
   "description": "A library to run a snake game using custom renderers",
+  "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc"
