@@ -1,4 +1,4 @@
-import { Renderer, SnakeGame, isFood, isSnakeChunk } from 'snake-lib';
+import { type Renderer, SnakeGame, isFood, isSnakeChunk } from 'snake-lib';
 
 export class WebRenderer implements Renderer {
     readonly boardId: string;
