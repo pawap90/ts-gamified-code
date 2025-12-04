@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "es2020",
+    "target": "esnext",
     "module": "nodenext",
-    "moduleResolution": "nodenext",
     "types": [],
 
     "sourceMap": true,

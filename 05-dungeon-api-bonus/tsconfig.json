@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "target": "esnext",
-    "module": "commonjs",
+    "module": "nodenext",
     "types": [],
 
     "sourceMap": true,
@@ -15,6 +15,6 @@
     "strict": true,
     "skipLibCheck": true,
 
-    "esModuleInterop": true // Required to use modern ESM-style imports with Express
+    // "esModuleInterop": true // Required to use modern ESM-style imports with Express
   }
 }
